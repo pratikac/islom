@@ -45,15 +45,23 @@ _FICD(JTAGEN_OFF & COE_ON);
 
 #define SIGNED14(x) (((x & (1<<13))==0) ? (x & (0x1FFF)) : ((x & (0x1FFF)) | 0xE000))
 
-volatile INT8 dat;
-void _ISR _NOPSV _U1RXInterrupt(void)
+
+signed int accelRead(unsigned int addr);
+signed int gyroRead(unsigned int addr);
+
+volatile int newData = FALSE;
+volatile INT16 xAccel;
+volatile INT16 yAccel;
+volatile INT16 gRead;
+void _ISR _NOPSV _T1Interrupt(void) //Running at 100Hz
 {
-    INNER_LED = ON;
-    dat = U1RXREG;
-    TX_string("caught\r\n");
-    INNER_LED = OFF;
-    _U1RXIF=0;
-}    
+    OUTER_LED = ON;
+    xAccel = accelRead(XACCL);
+    yAccel = accelRead(YACCL);
+    gRead = gyroRead(GRATE);
+    newData = TRUE;
+    _T1IF = 0;
+}
 
 int init_pll()
 {
@@ -229,7 +237,7 @@ void init_uart1()
 	U1MODEbits.PDSEL = 0;	    // No Parity, 8-data bits
 	U1MODEbits.ABAUD = 0;	    // Autobaud Disabled
 
-	_U1RXIE = 1;    		    // TX Interrupt Enable
+	_U1RXIE = 0;    		    // TX Interrupt Disable
 	U1STAbits.URXISEL=0x00;     // Interrupt after one byte
 	_U1RXIF=0;
 
@@ -237,6 +245,22 @@ void init_uart1()
 	U1STAbits.UTXEN = 1;	    // Enable UART Tx
 }    
 
+void init_timer1()
+{
+    // Initialize and enable Timer1 for Control Loop at 50Hz
+    T1CONbits.TON = 1;          // Enable Timer
+    T1CONbits.TCS = 0;          // Select internal instruction cycle clock
+    T1CONbits.TGATE = 0;        // Disable Gated Timer mode
+    T1CONbits.TCKPS = 0b11;     // Select 1:256 Prescaler
+    TMR1 = 0x00;                // Clear timer register
+    PR1 = 3094;                 // Load the period value for internal osc
+
+    IPC0bits.T1IP = 0x01;       // Set Timer 1 Interrupt Priority Level
+    IFS0bits.T1IF = 0;          // Clear Timer 1 Interrupt Flag
+    IEC0bits.T1IE = 1;          // Timer 1 interrupt Enable
+    T1CONbits.TON = 0;          // Timer Start Enable
+}
+    
 int main()
 {
     TRISA = 0;
@@ -250,27 +274,26 @@ int main()
     init_uart1();
     init_spi();
     init_adc();
-    
-    INT16 xAccel;
-    INT16 yAccel;
-    INT16 gRead;
+    init_timer1();
+        
+    TX_string("Start\r\n");
+    delay(1000);
+        
+    T1CONbits.TON = 1;
     while(1)
     {
-        xAccel = accelRead(XACCL);
-        yAccel = accelRead(YACCL);
-        gRead = gyroRead(GRATE);
-        OUTER_LED = ON;
-        INNER_LED = ON;
+        if( newData == TRUE)
+        {
+            TX_snum5(xAccel);
+            TX('\t');
+            TX_snum5(yAccel);
+            TX('\t');
+            TX_snum5(gRead);
+            TX_string("\r\n");
 
-        TX_snum5(xAccel);
-        TX('\t');
-        TX_snum5(yAccel);
-        TX('\t');
-        TX_snum5(gRead);
-        TX_string("\r\n");
-        OUTER_LED = OFF;
-        INNER_LED = OFF;
-        delay(1);             //delay in ms
+            OUTER_LED = OFF;            
+            newData = FALSE;
+        }
     }  
     return 0;      
 };

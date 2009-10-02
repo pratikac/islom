@@ -1,4 +1,4 @@
-#define BAUDRATE	38400
+#define BAUDRATE	19200
 #define BRGVAL		(((FCY/BAUDRATE)/16)-1)
 
 char rxChar;
