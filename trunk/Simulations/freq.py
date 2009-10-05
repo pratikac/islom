@@ -8,11 +8,11 @@ import numpy as np
 #For the new design 
 #Hopper params
 M = 2						# platform mass
-m = 0.4						# leg mass
+m = 0.2						# leg mass
 g = 9.8						# gravity
 l0 = 0.3					# spring relaxed length
-H = 0.71					# dropping height
-k = 500.0					# spring constant
+H = 0.8 					# dropping height
+k = 300.0					# spring constant
 L = 0.7                     # length of the leg
 h_m_cg = 0.5                # cg height of the leg
 h_M_cg = L-l0               # It hangs from L till l0
@@ -25,9 +25,9 @@ H_array = []
 M_array = []
 m_array = []
 
-while H < 1:
-	H = H + 0.01
-	H_array.append(H)
+while m < 1:
+	m = m + 0.01
+	m_array.append(m)
 	x1 = 0                      # height of M at full compression (during stance)
 
 	# Conserve energy at max. height and max. extension of spring
@@ -73,7 +73,7 @@ while H < 1:
 	T = t1 + t2 + t3
 	w_hop = 2*np.pi/T
 	print "w_hop: ", w_hop
-	w_nat = np.sqrt(k*m*M/(m+M))
+	w_nat = np.sqrt(k/(m*M)*(m+M))
 	print "w_nat: ", w_nat
 
 	w_hop_array.append(w_hop)
@@ -81,11 +81,11 @@ while H < 1:
 
 
 plt.figure()
-plt.plot(H_array, w_hop_array, 'b-', label='Hopping freq. rad/s')
-plt.plot(H_array, w_nat_array, 'r-', label='Natural freq. rad/s')
+plt.plot(m_array, w_hop_array, 'b-', label='Hopping freq. rad/s')
+plt.plot(m_array, w_nat_array, 'r-', label='Natural freq. rad/s')
 plt.grid()
 plt.legend( ('Hopping freq. rad/s', 'Natural freq. rad/s'), loc="best")
-plt.title('Variation with hopping height (m), M = 2, m = 0.4')
+plt.title('Variation with m (kg), H = 0.8 m, M = 2')
 plt.show()
 
 
