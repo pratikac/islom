@@ -24,7 +24,7 @@ RAD2DEG = 180/pi
 
 init_pitch = 45*DEG2RAD
 rho_steel = 7850
-dist_wheel = 0.05
+dist_wheel = 0.1
 r_wheel = 0.06
 m_wheel = pi*2*r_wheel*pi*0.01*0.01*rho_steel			
 d_cg = m_wheel*dist_wheel/(m+m_wheel+1)
@@ -48,12 +48,14 @@ ploty4_array = []
 ploty5_array = []
 ploty6_array = []
 
-dist_wheel = 0.05
+# dist_wheel = 0.05
+r_wheel = 0.02
 count = 0
 while count<100:
 	count += 1
-	dist_wheel += 0.002
-	plotx_array.append(dist_wheel)
+	# dist_wheel += 0.002
+	r_wheel += 0.0008
+	plotx_array.append(r_wheel)
 	
 	# Stupid vars, recalculate
 	m_wheel = pi*2*r_wheel*pi*0.01*0.01*rho_steel			
@@ -146,7 +148,7 @@ plot(plotx_array, ploty4_array, 'g-', label='T available (10*mN.m)')
 plot(plotx_array, ploty5_array, 'k-', label='T_max needed (10*mN.m)')
 plot(plotx_array, ploty2_array, 'y-', label='Max. Power (W*100)')
 plot(plotx_array, ploty6_array, 'm-', label='m_wheel (gm*10)')
-title("Variation with dist_wheel (m)")
+title("Variation with r_wheel (m)")
 legend(loc="best")
 grid()
 
