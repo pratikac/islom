@@ -67,7 +67,7 @@ for i in range(100):
     x = np.sqrt(Ewaste*2/k)
     T = r*(k*x - M*g)
     w_max = 2*x/r/t_wound			#triangular omega vs time
-    I = (V - Ke*w_max/eta)/Ra		#neglect inductance, find current
+    I = (V - Ke*w_max*eta)/Ra		#neglect inductance, find current
     Tavail = eta*Km*I
 
     x_array.append(1000*x)
