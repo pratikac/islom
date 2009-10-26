@@ -39,13 +39,16 @@ while m < 1:
 	print x1
 	print "Leg mechanism max. height: ", L-l0-x1
 
-	# C.G. falls from H till x2 (c.g. just before impact)
-	x2 = (h_m_cg*m + h_M_cg*M)/ (m+M)
+    # C.G. falls from H till x2 (c.g. just before impact)
+	Ewaste = M*g*(H-l0)/(1 + M/m)
+	pre_extension = np.sqrt(Ewaste*2/k)
+	
+	x2 = (h_m_cg*m + (h_M_cg-pre_extension)*M)/ (m+M)
 	t1 = np.sqrt(2* (H - x2)/g)					# time of fall to this point
 	v_cg_t1 = np.sqrt(2*g*(H-x2))				# assume both M, m fall by same height => v_cg = v_m = v_M
 	print "t1: ", t1
 
-	# SHM after t1 till x = mg/k as follows
+	# SHM after t1 as follows
 	# Initial vel = v_cg_t1
 	# Initial displacement = 0
 	# Take the solution with -ve v

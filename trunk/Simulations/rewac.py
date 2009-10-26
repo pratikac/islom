@@ -11,7 +11,7 @@ g = 9.8						# gravity
 l0 = 0.3					# spring relaxed length
 H = 0.8 					# dropping height
 k = 300.0					# spring constant
-L = 0.7                     # length of the leg
+L = 0.8                     # length of the leg
 h_m_cg = 0.5                # cg height of the leg
 h_M_cg = L-l0               # It hangs from L till l0
 stop_dis = l0 - m*g/k
@@ -24,8 +24,8 @@ RAD2DEG = 180/pi
 
 init_pitch = 45*DEG2RAD
 rho_steel = 7850
-dist_wheel = 0.1
-r_wheel = 0.06
+dist_wheel = 0.15
+r_wheel = 0.08
 m_wheel = pi*2*r_wheel*pi*0.01*0.01*rho_steel			
 d_cg = m_wheel*dist_wheel/(m+m_wheel+1)
 
@@ -48,21 +48,27 @@ ploty4_array = []
 ploty5_array = []
 ploty6_array = []
 
-# dist_wheel = 0.05
-r_wheel = 0.02
+dist_wheel = 0.05
+# r_wheel = 0.04
 count = 0
-while count<100:
+while count<10:
 	count += 1
-	# dist_wheel += 0.002
-	r_wheel += 0.0008
-	plotx_array.append(r_wheel)
+	dist_wheel += 0.002
+	# r_wheel += 0.001
+	plotx_array.append(dist_wheel)
 	
 	# Stupid vars, recalculate
 	m_wheel = pi*2*r_wheel*pi*0.01*0.01*rho_steel			
 	d_cg = m_wheel*dist_wheel/(m+m_wheel+1)
 	M = m_wheel + 1.0
 	w = sqrt(k/M)
+	
+	Ewaste = M*g*(H-l0)/(1+ M/m)
+	pre_extension = np.sqrt(Ewaste*2/k)
+	h_M_cg = L - l0 - pre_extension
+	
 	h_cg = (h_m_cg*m + h_M_cg*M)/(m+M)	# Height of CG from ground
+
 	J_wheel = m_wheel*r_wheel*r_wheel
 	# Neglect the contribution to J_body by the reaction wheel for now
 	J_body = M*(pow((h_cg - h_M_cg),2) + d_cg*d_cg) + m*(pow((h_cg - h_m_cg),2) + d_cg*d_cg)
@@ -84,7 +90,7 @@ while count<100:
 	v_cg_t1 = sqrt(2*g*(H-x2))				# assume both M, m fall by same height => v_cg = v_m = v_M
 	# print "t1: ", t1
 
-	# SHM after t1 till x = mg/k as follows
+	# SHM after t1 as follows
 	# Initial vel = v_cg_t1
 	# Initial displacement = 0
 	# Take the solution with -ve v
@@ -113,42 +119,39 @@ while count<100:
 	T_air = t1+t3
 	pitch = init_pitch
 	pitch_lf = pitch - v*t2/h_cg			# pitch at lift-off
-	mean_pitch = (pitch + pitch_lf)/2
 	# print "pitch_lf: ", pitch_lf
 
 	# omega_air = I*moment_arm/J_body, this operates for T_max
 	# Pain here, do we talk about the time variation of the impact force for the stance period??
-	theta_dot = m*v_cg_t1*(h_cg*sin(mean_pitch) + d_cg*cos(mean_pitch))/J_body
+	theta_dot = m*v_cg_t1*((h_cg-pre_extension)*sin(pitch) + d_cg*cos(pitch))/J_body
 	# print "theta_dot: ", theta_dot
 	
 	# Need to go to init_pitch from pitch_lf with this theta_dot (and omega by rewac)
 	# Also, need a small omega_reorient to avoid problem with coriolis
-	T_min_reorient = 0.5*T_air
+	T_min_reorient = 0.3*T_air
 	omega_reorient = (init_pitch - pitch_lf - 0.5*theta_dot*T_min_reorient*T_min_reorient)/T_min_reorient
 	omega_wheel = -(omega_reorient*(J_body+J_wheel))/J_wheel
 	I = (V - Ke*absolute(omega_wheel)*eta)/Ra
 	P = V*I										# Worst case power
 	T = Km*eta*I								# Available torque
-	omega_dot = omega_wheel/(T_air*0.3)
-	T_max_needed = J_wheel*abs(omega_dot)
+	omega_dot = omega_wheel/(T_air*0.2)
+	T_needed = J_wheel*abs(omega_dot)
 
-	ploty4_array.append(T*10000)
-	ploty5_array.append(T_max_needed*10000)
+	ploty4_array.append(T*1000 - T_needed*1000)
 	ploty1_array.append(omega_wheel*60/2/pi)
 	ploty2_array.append(P*100)
-	ploty3_array.append(theta_dot*100)
+	ploty3_array.append(theta_dot)
 	ploty6_array.append(m_wheel*10000)
 
 print "Done"
 
 figure(1)
 plot(plotx_array, ploty1_array, 'b-', label='Omega_wheel (RPM)')
-plot(plotx_array, ploty3_array, 'r-', label='theta_dot (rad*100/s/s, stabilizing')
-plot(plotx_array, ploty4_array, 'g-', label='T available (10*mN.m)')
-plot(plotx_array, ploty5_array, 'k-', label='T_max needed (10*mN.m)')
-plot(plotx_array, ploty2_array, 'y-', label='Max. Power (W*100)')
-plot(plotx_array, ploty6_array, 'm-', label='m_wheel (gm*10)')
-title("Variation with r_wheel (m)")
+plot(plotx_array, ploty4_array, 'g-', label='Torque (avail - needed)(mN.m)')
+# plot(plotx_array, ploty5_array, 'k-', label='T_max needed (mN.m)')
+# plot(plotx_array, ploty2_array, 'y-', label='Max. Power (W*100)')
+# plot(plotx_array, ploty6_array, 'm-', label='m_wheel (gm*10)')
+title("Variation with dist_cg (r_wheel = 8cm)(m)")
 legend(loc="best")
 grid()
 

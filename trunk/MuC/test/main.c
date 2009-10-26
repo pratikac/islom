@@ -1,9 +1,9 @@
 #include <p33fxxxx.h>
 #include <stdlib.h>
 
-#include "common/delay.h"
-#include "common/uart.c"
-#include "common/macros.h"
+#include "../common/delay.h"
+#include "../common/uart.c"
+#include "../common/macros.h"
 
 typedef unsigned long UINT32;
 typedef signed long INT32;
@@ -45,6 +45,15 @@ _FICD(JTAGEN_OFF & COE_ON);
 
 #define SIGNED14(x) (((x & (1<<13))==0) ? (x & (0x1FFF)) : ((x & (0x1FFF)) | 0xE000))
 
+#define IN1         _LATC7
+#define IN2         _LATC6
+#define DI1         _LATB9
+#define DI2         _LATB8
+
+#define ENABLE_MOTOR    {DI1 = 0; DI2 = 1;}
+#define DISABLE_MOTOR   {DI1 = 1; DI2 = 0;}
+#define PRD     500
+
 
 signed int accelRead(unsigned int addr);
 signed int gyroRead(unsigned int addr);
@@ -53,12 +62,22 @@ volatile int newData = FALSE;
 volatile INT16 xAccel;
 volatile INT16 yAccel;
 volatile INT16 gRead;
-void _ISR _NOPSV _T1Interrupt(void) //Running at 100Hz
+
+volatile INT16 prevPos = 0;
+volatile INT16 currPos = 0;
+volatile INT16 vel = 0;
+
+void _ISR _NOPSV _T1Interrupt(void) //Running at 50Hz
 {
     OUTER_LED = ON;
-    xAccel = accelRead(XACCL);
-    yAccel = accelRead(YACCL);
-    gRead = gyroRead(GRATE);
+    //xAccel = accelRead(XACCL);
+    //yAccel = accelRead(YACCL);
+    //gRead = gyroRead(GRATE);
+    
+    prevPos = currPos;
+    currPos = POS1CNT;
+    vel = (INT32)((currPos - prevPos)*50/4);
+
     newData = TRUE;
     _T1IF = 0;
 }
@@ -89,6 +108,14 @@ void peripheral_pin_config()
     RPINR20bits.SDI1R = 3;      // RP3 mapped to SDI
     _RP16R = 0b00111;           // RP16 mapped to SDO
     _RP2R = 0b01000;            // RP2 mapped to SCK
+    
+  	//Quadrature decoding
+	RPINR14bits.QEA1R = 0;
+	RPINR14bits.QEB1R = 1;
+
+	//Output Compare
+	_RP22R = 0b10010;           // RP22 tied to OC1
+	_RP23R = 0b10011;           // RP23 tied to OC2
 
 	__builtin_write_OSCCONL(OSCCON | BIT(6));
 }   
@@ -260,7 +287,62 @@ void init_timer1()
     IEC0bits.T1IE = 1;          // Timer 1 interrupt Enable
     T1CONbits.TON = 0;          // Timer Start Enable
 }
-    
+
+// Motor PWM timer    
+void init_timer2()
+{
+  	// Initialize and enable Timer2 for Output Compare
+	OC1CONbits.OCM = 0b000;     // Disable Output Compare Module
+	OC1CONbits.OCTSEL = 0;      // Select Timer 2 as output compare time base
+	OC1R = 0;                   // Load the Compare Register Value
+	OC1RS = 0;                // Write the duty cycle for the second PWM pulse
+	OC1CONbits.OCM = 0b110;     // Select the Output Compare mode 
+	OC2CONbits.OCM = 0b000;     // Disable Output Compare Module
+	OC2CONbits.OCTSEL = 0;      // Select Timer 2 as output compare time base
+	OC2R = 0;                   // Load the Compare Register Value
+	OC2RS = 0;                // Write the duty cycle for the second PWM pulse
+	OC2CONbits.OCM = 0b110;     // Select the Output Compare mode 
+
+	T2CONbits.TON = 0;          // Disable Timer
+	T2CONbits.TCS = 0;          // Select internal instruction cycle clock
+	T2CONbits.TGATE = 0;        // Disable Gated Timer mode
+	T2CONbits.TCKPS = 0b01;     // Select 1:8 Prescaler
+	TMR2 = 0x00;                // Clear timer register
+	PR2 = 500;                  // Load the period value
+
+	IPC1bits.T2IP = 0x01;       // Set Timer 2 Interrupt Priority Level
+	IFS0bits.T2IF = 0;          // Clear Timer 2 Interrupt Flag
+	IEC0bits.T2IE = 0;          // Timer 2 interrupt enable
+	T2CONbits.TON = 1;          // Start Timer
+}
+
+void setMotorSpeed(INT16 speed)
+{
+	if(speed >= 0)
+	{
+		OC2RS = 0;
+		if(speed < PRD) OC1RS = speed;
+		else            OC1RS = PRD;
+	}
+
+	else
+	{
+		OC1RS = 0;
+		if(speed >-PRD) OC2RS = -speed;
+		else            OC1RS = PRD;
+	}
+}
+
+void init_qei1()
+{
+  	//QEI Interface
+	QEI1CONbits.QEIM = 0b111;       // QEI enabled in x4 mode, POSCNT reset by match 
+	DFLT1CONbits.QEOUT = 1;         // Digital filter outputs enabled
+	DFLT1CONbits.QECK = 0b010;      //1:4 for digital filter
+	DFLT1CONbits.CEID = 1;          //Count error interrupt disabled
+	MAX1CNT = 0xFFFF;               //MAXCNT to 2^16-1
+}    
+
 int main()
 {
     TRISA = 0;
@@ -275,22 +357,38 @@ int main()
     init_spi();
     init_adc();
     init_timer1();
-        
-    TX_string("Start\r\n");
+    init_timer2();
+    init_qei1();
+            
+    TX_string("Wait\r\n");
     delay(1000);
+    TX_string("Start\r\n");
         
     T1CONbits.TON = 1;
+    ENABLE_MOTOR;
+    
+    POS1CNT = 0;
+    setMotorSpeed(70);
+    
     while(1)
     {
         if( newData == TRUE)
         {
+            /*
             TX_snum5(xAccel);
             TX('\t');
             TX_snum5(yAccel);
             TX('\t');
             TX_snum5(gRead);
             TX_string("\r\n");
-
+            */
+            TX_snum5(currPos);
+            TX('\t');
+            TX_snum5(prevPos);
+            TX('\t');
+            TX_snum5(vel);
+            TX_string("\r\n");
+                
             OUTER_LED = OFF;            
             newData = FALSE;
         }
