@@ -1,0 +1,55 @@
+\documentclass[a4paper, 10pt]{report}
+\usepackage{sectsty}
+\usepackage[margin=1in]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{hyperref}
+\hypersetup
+{   colorlinks=true,        % colored links, not boxes
+    linkcolor=blue,         % internal links
+    citecolor=green,        % bib links
+    filecolor=magenta,      % file color
+    urlcolor=cyan           % external color
+}
+\usepackage{url}
+\usepackage[square, comma]{natbib}
+\usepackage[english]{babel}
+\usepackage{float}
+
+\setlength{\parindent}{0pt}
+
+%\renewcommand*\subsectionfont{\itshape}
+
+\begin{document}
+    {
+    \pagestyle{empty}       % no page numbers
+    \include{cover}
+    \include{certi}
+    \include{ack}
+    }
+    \newpage
+    \pagenumbering{roman} \setcounter{page}{0}
+    \tableofcontents
+    
+    \include{abstract}
+    
+    \newpage
+    \addcontentsline{toc}{chapter}{List of figures}
+    \label{pg:figlist}
+    \listoffigures
+
+    \include{chap1}
+    %\include{chap2}
+    \include{chap3}
+    \include{chap4}
+    \include{chap5}
+    %\include{chap6}    
+    
+    %\newpage
+    %\addcontentsline{toc}{chapter}{Bibliography}
+    %\pagenumbering{roman} \setcounter{page}{0}
+    %\bibliographystyle{ieeetr}
+    %\bibliography{ref}
+\end{document}

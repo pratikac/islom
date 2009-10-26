@@ -1,0 +1,30 @@
+\chapter{Embedded System}
+\label{chap:embedded}
+This chapter details the development of the embedded system necessary for controlling and actuating the hopper. It consists of two
+major parts yet,
+\begin{enumerate}
+\item
+Micro-controller and RF interface
+\item
+Inertial Measurement Unit (IMU)
+\end{enumerate}
+
+\section{Micro-controller}
+This microcontroller chosen for this system is a Microchip dsPIC33F64MC804. It can run at 40 MIPS with an onboard flash memory of
+64 KB along with a 16 KB SRAM. There are a host of integrated peripherals like Serial Peripheral Interface (SPI), UART, Analog to
+Digital convertor (ADC), Digital to Analog Convertor (DAC) and Timers to generate Pulse Width Modulation (PWM) that can be used.
+Other major features provided with it are the Direct Memory Access controller (DMA) which can transfer memory from one peripheral
+to other without CPU intervention and the high multiplexing of its IO pins. The latter enables almost all IO pins to be assigned
+to any of the above mentioned peripherals (except analog pins) and greatly simplifies design. Pickit 2 is a programmer cum
+debugger that had been ordered for programming the micro-controller.\\
+
+XBee modules using the Zigbee protocol are used to form a wireless link with the embedded system on the hopper. The range of these
+devices is quite sufficient for indoor uses (about 100 m). The interface on the microcontroller side is through UART and a custom
+made FT232 module will be used to interface it with the base station to gather telemetry. A python module to grab and plot this 
+telemetry from the virtual serial port of FT232 is in development.\\
+
+The current development board contains one motor driver and its adjoining encoder port. The final module will contain two motor
+drivers and encoder arrangements for the pinion and the reaction wheel motors.
+
+\section{Inertial Measurement Unit}
+
