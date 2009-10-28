@@ -53,10 +53,10 @@ order=2
 
 [item:chap3.tex]
 archive=true
-column=0
+column=1
 encoding=UTF-8
 highlight=LaTeX
-line=97
+line=7
 open=true
 order=1
 
@@ -65,7 +65,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=3
 open=true
 order=2
 
@@ -101,6 +101,6 @@ archive=true
 column=4
 encoding=UTF-8
 highlight=LaTeX
-line=46
+line=30
 open=true
 order=0

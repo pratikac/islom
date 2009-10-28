@@ -19,7 +19,7 @@ FREQ = 50						# 50 Hz
 dt = 1/FREQ
 RAD2DEG = 180/np.pi
 
-f = open('data1.txt', 'r');
+f = open('data2.txt', 'r');
 
 count = 0;
 if f:
@@ -37,7 +37,7 @@ if f:
 			line = f.readline()
 			count = count + 1
 f.close()
-
+print "Read ",len(index), " lines."
 
 # Persistant states.
 P_00 = 1
@@ -46,17 +46,22 @@ P_10 = 0
 P_11 = 1
 
 # Constants.  
-A_01 = -dt;
+A_01 = dt;
 B_00 = dt;
 
 # Accelerometer variance
 Sz = 22*ACCEL_SCALE*g;
 
 # Gyro covariance ??
-Sw_00 = 0.001;
-Sw_01 = 0.003;
-Sw_10 = 0.003;
-Sw_11 = 0.003;
+#Sw_00 = 0.001;
+#Sw_01 = 0.003;
+#Sw_10 = 0.003;
+#Sw_11 = 0.003;
+
+Sw_00 = 92E-6;
+Sw_01 = 0;
+Sw_10 = 0;
+Sw_11 = 0;
 
 # Output.
 x_00 = 0.0

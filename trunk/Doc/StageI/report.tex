@@ -2,7 +2,8 @@
 \usepackage{sectsty}
 \usepackage[margin=1in]{geometry}
 \usepackage[onehalfspacing]{setspace}
-\usepackage{graphicx}
+\usepackage[pdftex]{graphicx}
+\usepackage{tikz}
 \usepackage{amsmath}
 \usepackage{bm}
 \usepackage{hyperref}
@@ -20,7 +21,10 @@
 
 \setlength{\parindent}{0pt}
 
-%\renewcommand*\subsectionfont{\itshape}
+% tikz
+\usetikzlibrary{arrows}
+\usetikzlibrary{snakes}
+\usetikzlibrary{patterns}
 
 \begin{document}
     {
@@ -41,11 +45,11 @@
     \listoffigures
 
     \include{chap1}
-    %\include{chap2}
+    \include{chap2}
     \include{chap3}
     \include{chap4}
     \include{chap5}
-    %\include{chap6}    
+    \include{chap6}    
     
     %\newpage
     %\addcontentsline{toc}{chapter}{Bibliography}

@@ -5,7 +5,7 @@ design. Two different designs both based on extension springs were looked into.
 This chapter describes them and the motivation behind choosing the final design to be fabricated.
 
 \section{Design 1}
-Write general description of design 1 here.
+%Write general description of design 1 here.
 \subsection{Energy pumping}
 \begin{figure}[!h]
 \centering
@@ -23,7 +23,7 @@ A few points to note about the energy pumping design are,
 The motor has to move a distance twice that of the extension of the spring. This is
 especially important when we look at the timescales over which we have to extend the spring, these are around
 200-300 msecs. A larger distance in smaller time results in a large $\omega$ for the motor which translates
-to a smaller available torque. This neccesitates a larger motor which can provide this torque. 
+to a smaller available torque. This neccesitates a larger motor that can provide this torque. 
 \item
 The large mass of the platform (M) is helping in the extension of the spring and hence the torque required
 for the winding motor reduces.
@@ -46,12 +46,11 @@ compressing the torsional spring every time). The lower part of the leg is cylin
 the top face of the cylindrical bushing shown inside the main leg. Thus the lower leg can move only up. The protruding
 portion of the main leg prevents the hatch from moving in the clockwise direction, thus constraining the pulley from
 rolling back in the anti-clockwise direction.
-Salient points of this part are,
-\begin{enumerate}
+\begin{itemize}
 \item
 The diameter of the lower leg is expected to be around 2-3 cms and it is difficult to fabricate the hatch on such
 a small surface.
-\end{enumerate}
+\end{itemize}
 
 \subsection{Using the impact for energy release}
 This design is unique because it utilizes the impact force ($m\:v_{touch-down}$) to release the stored energy in the main
@@ -64,18 +63,18 @@ responsible for pushing the lower leg back outside after $t_{liftoff}$.
 \section{Design 2}
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.5]{fig/seth_design.pdf}
+\includegraphics[scale=1.8]{fig/seth_design.pdf}
 \caption{Rack and pinion on the leg with the drive motor}
 \label{fig:3_seth_design}
 \end{figure}
 
 \subsection{Energy pumping}
-The leg consists of a rack on one of its sides. A single dual shaft motor in a sleever is used to drive the pinion
+The leg consists of a rack on one of its sides. A single dual shaft motor in a sleeve is used to drive the pinion
 on this rack as
 well as pull the paul to free the ratchet. This motor consists of a string attached to a friction pulley on the shaft.
 A friction pulley is a device whose coupling is dependent upon the speed of the relative motion between the two surfaces.
-Thus, the motor can pull the paul only beyond a certain $\omega$. Below this speed, the paul spring is enough to
-engage it with the ratchet.
+Thus, the motor can pull the paul only beyond a certain $\omega$. Below this speed, the paul spring is strong enough to
+engage it with the ratchet. After the paul engages, the string becomes slack again.
 
 \subsection{Constraint} 
 The platform and the ratchet are rigidly connected to a band drive which rolls along
@@ -85,11 +84,23 @@ pulled by the drive motor.
 
 \subsection{Energy release}
 This design uses an electromechanical system to release energy. After sensing the impact through a touch switch located
-below the leg, we can use a voice coil actuator to slack the string attached to the paul. This brings in the pull
-back spring attached to the sleeve into the picture and it prompty pulls the sleeve away from the rack.
-\textbf{Not sure about this part.}
+below the leg, we can use a voice coil actuator to pull the string which in turn moves the paul. This brings in the pull
+back spring attached to the sleeve into the picture and it prompty pulls the sleeve away from the rack. Note that the string attached 
+to the drive motor pulley is slack at this point.
 
-\section{Modifications}
+\subsection{Evaluation}
+\begin{itemize}
+\item
+The worm-worm wheel on the rack mechanism provides a huge mechanical advantage and thus reduces the maximum torque required from
+the motor. This scales down the mechanical system as well as the electronic system requirements.
+\item
+The friction pulley has to work against the pual spring, sleeve spring and the horizontal component of the rack force ($k\:x\:tan\:\theta$) to keep the string in tension. This is compounded by the fact that the there is a maximum $\omega$ the motor can
+accelerate to in the energy storing phase. It is much better if this $\omega$ is dictated by the torque requirements which are as
+critical rather than this mechanism.
+% \item
+% Voice coil actuators take up a lot of energy and can be replaced by a servo motor instead. The torque calculations for this are yet
+% to be done.
+\end{itemize}
 
 
 
