@@ -1,0 +1,505 @@
+\documentclass[xcolor=dvipsnames]{beamer}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{helvet}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+
+\usetheme{Frankfurt}
+\useinnertheme{rounded}
+\setbeamercovered{transparent}
+
+\beamertemplatesolidbackgroundcolor{black!5}
+\beamertemplatetransparentcovered
+
+\newcommand{\greencol}{\color[RGB]{35,170,30}}
+\setbeamerfont{bibfont}{size=\tiny}
+
+\title{Chaos in Cryptography}
+%\subtitle{Something catchy here}
+
+\author[Vaibhav and Pratik]{Vaibhav Devanathan\\[0.1in]Pratik Chaudhari}
+\institute[IIT Bombay]{IIT Bombay}
+\date[\today]{PH 542 - Non Linear Dynamics\\[0.1in]{\footnotesize Prof. P. Paramananda}}
+
+\AtBeginSection[]
+{
+	\begin{frame}<beamer>
+		\frametitle{Outline}
+		\tableofcontents[currentsection]
+	\end{frame}
+}
+
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\section[Intro]{Introduction}
+\begin{frame}
+\frametitle{Cryptography and Chaos}
+\begin{block}{Cryptography}
+\end{block}
+
+\begin{enumerate}
+\item
+Message / Signal
+\newline
+\item
+Mask
+\newline
+\end{enumerate}
+
+\begin{block}{Complexity}
+\end{block}
+\begin{enumerate}
+\item
+SDIC
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Cryptography}
+\begin{block}{Public Key Cryptography}
+\end{block}
+\vspace{0.2in}
+\begin{block}{Example}
+\end{block}
+\begin{enumerate}
+\item
+Schematic
+\newline
+\item
+Static Public Key
+\newline
+\item
+Disadvantages
+\newline
+\item
+How can chaos help?
+\end{enumerate}
+\end{frame}
+
+\section[Types]{Types of Encryptions}
+\subsection*{Analog}
+\begin{frame}
+\frametitle{Implementation}
+\begin{block}{Analog System}
+\end{block}
+\begin{enumerate}
+\item
+Input is a \alert{Signal}
+\newline
+\item
+\alert{Continuous} Map (3D)
+\newline
+\item
+Transmitted signal is a \alert{Superposition}
+\newline
+\end{enumerate}
+\end{frame}
+
+\subsection*{Digital}
+\begin{frame}
+\frametitle{Implementation}
+\begin{block}{Digital System}
+\end{block}
+\begin{enumerate}
+\item
+Input is a \alert{stream of bits}
+\newline
+\item
+\alert{Discrete} Map (1D or 2D)
+\newline
+\item
+Transmitted stream  is a \alert{Sum}
+\newline
+\end{enumerate}
+\end{frame}
+
+\section[Lorenz]{Lorenz equations : Pseudo-random number generators}
+\subsection*{Equations}
+\begin{frame}
+\frametitle{Lorenz System}
+\begin{block}{Equations}
+\begin{equation*}
+\dot{x} = \sigma ( y - x )
+\end{equation*}
+\begin{equation*}
+\dot{y} = x ( \rho - z ) - y
+\end{equation*}
+\begin{equation*}
+\dot{z} = xy - \beta x
+\end{equation*}
+\end{block}
+\begin{block}{Chaotic for,}
+$\beta = 2.8$\hfill$\rho = 54.5$\hfill$\sigma = 11.5$
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Lorenz Trajectories}
+\begin{figure}
+\centering
+\includegraphics[scale=1.2]{lorenz_plot.pdf}
+\end{figure}
+\end{frame}
+
+\subsection*{Lena}
+\begin{frame}
+\frametitle{Lorenz equations on an image}
+\begin{enumerate}
+\item
+Propagate Lorenz equations for $512x512$ steps
+\newline
+\item
+Pseudo-Random sequence with $x$ as \alert{seed}
+\newline
+\item
+\alert{Encryption} -  $B_{(i,j)} \rightarrow B_{(i,j)} + (\; x_{t_{ij}}\;10^3\;mod\;256\;)$
+\newline
+\item
+\alert{Decryption} - $B_{(i,j)} \rightarrow B_{(i,j)} - (\; x_{t_{ij}}\;10^3 \;mod\;256\;)$
+\newline
+\item
+Note the {\em modulo 256} arithmetic
+\newline
+\item
+Can be done for a 3-channel image with $(x, y, z)$ as seed
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{A Perfect Decryption}
+\begin{figure}
+\centering
+\includegraphics[scale=1]{lena_good.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{SDIC : Bad Decryption}
+\begin{figure}
+\centering
+\includegraphics[scale=1]{lena_bad.pdf}
+\end{figure}
+\end{frame}
+
+\section[Sync s-r]{Synchronous Sender-Receiver}
+\subsection*{Sync_sr}
+\begin{frame}
+\frametitle{Synchronous Chaotic System}
+
+\begin{columns}
+
+\column{2in}
+\begin{block}{Sender : Lorenz System}
+\begin{equation*}
+\dot{x_1} = \sigma ( y_1 - x_1 )
+\end{equation*}
+\begin{equation*}
+\dot{y_1} = x_1 ( \rho - z_1 ) - y_1
+\end{equation*}
+\begin{equation*}
+\dot{z_1} = {x_1}y_1 - \beta x_1
+\end{equation*}
+\end{block}
+
+\column{2in}
+\begin{block}{Receiver : Coupled System}
+\begin{equation*}
+x_2 = x_1
+\end{equation*}
+\begin{equation*}
+\dot{y_2} = x_2 ( \rho - z_2 ) - y_2
+\end{equation*}
+\begin{equation*}
+\dot{z_2} = {x_2}y_2 - \beta x_2
+\end{equation*}
+\end{block}
+
+\end{columns}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{sync_sr.pdf}
+\end{figure}
+\end{frame}
+
+\subsection*{Analysis}
+\begin{frame}
+\frametitle{Characteristics}
+\begin{block}{Characteristics of Triggered setup}
+\end{block}
+\begin{enumerate}
+\item
+\alert{Arbitrary} initial condition
+\newline
+\item
+$x$ is the \alert{trigger} signal
+\newline
+\item
+$[y_1, y_2]$ or $[z_1, z_2]$ are the key-generators
+\newline
+\item
+Sampled at pre-determined intervals
+\newline
+\item
+\alert{Different} initial condition for future communication
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Disadvantages}
+\begin{enumerate}
+\item
+Driving function and generators are \alert{dependent}
+\newline
+\item
+Key compromised by interception of driving signal
+\newline
+\item
+Ideally, these should be independent
+\newline
+\item
+A \alert{Slave system} added for enhancing security
+\newline
+\end{enumerate}
+\end{frame}
+
+\section[Sync m-s]{Synchronous Master Slave System}
+\subsection*{Sync_ms}
+\begin{frame}
+\frametitle{Master - Slave system : Schematic}
+\begin{figure}
+\centering
+\includegraphics[scale=1.2]{sync_ms.pdf}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Master Slave Equations}
+\begin{itemize}
+\item
+Master is again a Lorenz system
+\end{itemize}
+\begin{columns}
+\column{2in}
+\begin{block}{Sender's End}
+\begin{equation*}
+\dot{x_1} = -x_1^3 + y_1
+\end{equation*}
+\begin{equation*}
+\dot{y_1} = -x - x_1 - 8y_1
+\end{equation*}
+\end{block}
+\column{2in}
+\begin{block}{Receiver's End}
+\begin{equation*}
+\dot{x_2} = -x_2^3 + y_2
+\end{equation*}
+\begin{equation*}
+\dot{y_2} = -x - x_2 - 8y_2
+\end{equation*}
+\end{block}
+\end{columns}
+\vspace{0.2in}
+\begin{itemize}
+\item
+Both systems are \alert{coupled} and \alert{chaotic}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{A proof of synchronization}
+\begin{itemize}
+\item
+\begin{equation*}
+\dot{x}^{\ast} = \dot{x_1} - \dot{x_2} = - (x_1^3 - x_2^3 ) + y1 - y2
+\newline
+\end{equation*}
+\begin{equation*}
+\dot{x}^{\ast} = -x^{\ast} (x_1^2 + x_1 x_2 + x^2) + y^{\ast}
+\end{equation*}
+\item
+\begin{equation*}
+\dot{y}^{\ast} = \dot{y_1} - \dot{y_2} = - x^{\ast} - 8 y^{\ast}
+\end{equation*}
+\vspace{0.05in}
+\item
+\alert{Lyapunov function} is taken as $V = \frac{1}{2}({x^{\ast}}^2 + {y^{\ast}}^2 )$
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.7]{y1_y2.pdf}
+\end{figure}
+\end{frame}
+
+\subsection*{Diff}
+\begin{frame}
+\frametitle{Key Differences}
+\begin{block}{Synchronous system}
+\end{block}
+\begin{enumerate}
+\item
+Sender \alert{parameters} are the key for cipher
+\vspace{0.05in}
+\item
+Sender and receiver have \alert{same form}
+\vspace{0.05in}
+\end{enumerate}
+\begin{block}{Master - Slave system}
+\end{block}
+\begin{enumerate}
+\item
+\alert{Slave dynamics} is the key for cipher
+\vspace{0.05in}
+\item
+Different Slave dynamics for sender and receiver
+\vspace{0.05in}
+\item
+Extremely difficult to break even if Master is compromised
+\end{enumerate}
+\end{frame}
+
+\section[Code Breaking]{Are Chaotic Ciphers non-breakable?}
+\subsection*{failures}
+\begin{frame}
+\frametitle{Fallibilities}
+\begin{block}{Classical discrete systems}
+\end{block}
+\begin{enumerate}
+\item
+Limited \alert{key-space}
+\newline
+\item
+Redundancy in plain text - \alert{probable words}
+\newline
+\begin{itemize}
+\item
+Reverse engineering cipher text
+\end{itemize}
+\vspace{0.1in}
+\item
+Brute force attack, \alert{No need of a key!}
+\end{enumerate}
+
+\begin{block}{Continuous systems}
+\end{block}
+\begin{enumerate}
+\item
+\alert{Trade-off} between SNR and security
+\newline
+\item
+Round off errors
+\newline
+\end{enumerate}
+%\alert{Befriending the sender?}
+\end{frame}
+
+\subsection*{matthew}
+%Think about deleting this frame
+\begin{frame}
+\frametitle{Matthew's Chaotic Function}
+\begin{equation*}
+x_{n+1} = (\beta + 1)\;(1 + \frac{1}{\beta})^{\beta}\;x_n\;(1 - x_n)^{\beta}
+\end{equation*}
+where $\beta = 2.53$ and $x_n = 0.45$.
+\newline
+\begin{enumerate}
+\item
+Length of repeating cycles for 8 significant digits
+\newline
+\item
+Repeated data in plain text makes it worse
+\begin{figure}
+\centering
+\includegraphics[scale=0.8]{matthew.pdf}
+\end{figure}
+\end{enumerate}
+\end{frame}
+
+\subsection*{Lorenz better}
+\begin{frame}
+\frametitle{Making the Lorenz Cipher even better...}
+\begin{enumerate}
+\item
+\alert{$\Delta t \geq 0.0245$} - The Great Escape
+\newline
+\item
+Correlation between $\Delta x$, $\Delta y$ and $\Delta z$ for small $x$, $y$ and $z$
+\newline
+\item
+Conversion to integers for \alert{modulo arithmetic}
+\begin{equation*}
+x_{n+1} = (((round (x + \Delta x)\;mod\;m )+m)\; mod\;m) + 1
+\end{equation*}
+\begin{equation*}
+\Delta x = \sigma\;(x_n - y_n)\;\Delta t
+\end{equation*}
+\vspace{0.01in}
+\item
+\alert{Diffusion} of plain text in cipher text
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{An Improved Encryption on Lena}
+\begin{block}{Change of initial condition}
+\begin{enumerate}
+\item
+$(0.2030, 0.56680, 0.76990)$ $\rightarrow$ $\delta x = 10^{-7}$
+\newline
+\item
+$(0.2030, 56.680, 76.990)$ $\rightarrow$ $\delta x = 10^{-8}$
+\end{enumerate}
+\end{block}
+\vspace{0.2in}
+\begin{block}{Change of time sampling}
+\begin{enumerate}
+\item
+$\Delta t = 0.001 s$ $\rightarrow$ $\delta x = 10^{-6}$
+\newline
+\item
+$\Delta t = 1 s$ $\rightarrow$ $\delta x = 10^{-7}$
+\end{enumerate}
+\end{block}
+\end{frame}	
+
+\begin{frame}
+\frametitle{Further Reading}
+\usebeamerfont{bibfont}
+\begin{enumerate}
+\item
+R. He and P. G. Vaidya, {Implementation of chaotic cryptography with chaotic synchronization}, {\em American Physical
+Society}, Review E, Vol. 57, 2, Feb. 1998.
+\newline
+\item
+P. Lee, S. Pei and Y. Chen, {Generating Chaotic Stream Ciphers Using Chaotic Systems}, {\em Chinese Journal of Physics},
+Vol. 41, 6, Dec. 2003.
+\newline
+\item
+Q. Lawande, B. Ivan and S. Dhodapkar, {Chaos Based Crytography: A New Approach to Secure Communications},
+{\em BARC Newsletter}, No. 258, July 2005.
+\newline
+\item
+H. Kangwei and T. Lih, {Chaos and Cryptography : Applications and Analysis}, {\em Course Project USC 30001}
+\newline
+\item
+D. Wheeler, {Problems with Chaotic Cryptosystems}, {\em Article published in Cryptologia}, July 1989.
+\newline
+\item
+J. Carroll, J. Verhagen, P. Wong, {Chaos in Cryptography : The Escape from the Strange Attractor},
+{\em Article published in Cryptologia}, Jan. 1992.
+\end{enumerate}
+\end{frame}	
+
+
+\end{document}
+
+
