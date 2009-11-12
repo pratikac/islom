@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99c (Web2C 7.5.6)
+The top-level auxiliary file: report.aux
+The style file: ieeetr.bst
+A level-1 auxiliary file: cover.aux
+A level-1 auxiliary file: certi.aux
+A level-1 auxiliary file: abstract.aux
+A level-1 auxiliary file: chap1.aux
+A level-1 auxiliary file: chap2.aux
+A level-1 auxiliary file: chap3.aux
+A level-1 auxiliary file: chap4.aux
+A level-1 auxiliary file: chap5.aux
+A level-1 auxiliary file: chap6.aux
+A level-1 auxiliary file: ack.aux
+A level-1 auxiliary file: decla.aux
+Database file #1: ref.bib
+Warning--entry type for "leglab" isn't style-file defined
+--line 1 of file ref.bib
+You've used 19 entries,
+            1876 wiz_defined-function locations,
+            586 strings with 6098 characters,
+and the built_in function-call counts, 3581 in all, are:
+= -- 371
+> -- 112
+< -- 0
++ -- 48
+- -- 29
+* -- 219
+:= -- 561
+add.period$ -- 21
+call.type$ -- 19
+change.case$ -- 22
+chr.to.int$ -- 0
+cite$ -- 19
+duplicate$ -- 184
+empty$ -- 355
+format.name$ -- 29
+if$ -- 853
+int.to.chr$ -- 0
+int.to.str$ -- 19
+missing$ -- 10
+newline$ -- 63
+num.names$ -- 19
+pop$ -- 47
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 104
+stack$ -- 0
+substring$ -- 190
+swap$ -- 55
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 33
+width$ -- 21
+write$ -- 177
+(There was 1 warning)

@@ -1,4 +1,4 @@
-TARGET=report
+TARGET=2page
 
 all:
 	pdflatex $(TARGET).tex

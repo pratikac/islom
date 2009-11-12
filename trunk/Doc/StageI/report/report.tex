@@ -1,23 +1,34 @@
-\documentclass[a4paper, 10pt]{report}
+\documentclass[a4paper, 11pt]{report}
+
+\renewcommand{\bibname}{References}
+\bibliographystyle{ieeetr}
+
 \usepackage{sectsty}
 \usepackage[margin=1in]{geometry}
 \usepackage[onehalfspacing]{setspace}
 \usepackage[pdftex]{graphicx}
+\usepackage{subfig}
+\usepackage{wrapfig}
 \usepackage{tikz}
 \usepackage{amsmath}
 \usepackage{bm}
 \usepackage{hyperref}
 \hypersetup
 {   colorlinks=true,        % colored links, not boxes
-    linkcolor=blue,         % internal links
-    citecolor=green,        % bib links
-    filecolor=magenta,      % file color
-    urlcolor=cyan           % external color
+   linkcolor=blue,         % internal links
+   citecolor=red,          % bib links
+   filecolor=magenta,      % file color
+   urlcolor=cyan           % external color
+%    linkcolor=black,         % internal links
+%    citecolor=black,          % bib links
+%    filecolor=black,      % file color
+%    urlcolor=black           % external color
 }
 \usepackage{url}
 \usepackage[square, comma]{natbib}
-\usepackage[english]{babel}
+%\usepackage[english]{babel}
 \usepackage{float}
+
 
 \setlength{\parindent}{0pt}
 
@@ -31,12 +42,14 @@
     \pagestyle{empty}       % no page numbers
     \include{cover}
     \include{certi}
-    \include{ack}
     }
+    {
+    \small
     \newpage
+    \addtolength{\topmargin}{-1in}
     \pagenumbering{roman} \setcounter{page}{0}
     \tableofcontents
-    
+    }
     \include{abstract}
     
     \newpage
@@ -51,9 +64,10 @@
     \include{chap5}
     \include{chap6}    
     
-    %\newpage
-    %\addcontentsline{toc}{chapter}{Bibliography}
-    %\pagenumbering{roman} \setcounter{page}{0}
-    %\bibliographystyle{ieeetr}
-    %\bibliography{ref}
+    \newpage
+    \addcontentsline{toc}{chapter}{References}
+    \bibliography{ref}
+    
+    \include{ack}
+    \include{decla}
 \end{document}
