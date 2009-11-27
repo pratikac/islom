@@ -89,6 +89,8 @@ plt.plot(m_array, w_nat_array, 'r-', label='Natural freq. rad/s')
 plt.grid()
 plt.legend( ('Hopping freq. rad/s', 'Natural freq. rad/s'), loc="best")
 plt.title('Variation with m (kg), H = 0.8 m, M = 2')
+plt.xlabel('Leg mass [kg]')
+plt.ylabel('Frequency [rad/s]')
 plt.show()
 
 
