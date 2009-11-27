@@ -67,17 +67,13 @@ volatile INT16 prevPos = 0;
 volatile INT16 currPos = 0;
 volatile INT16 vel = 0;
 
-void _ISR _NOPSV _T1Interrupt(void) //Running at 50Hz
+void _ISR _NOPSV _T1Interrupt(void) //Running at 10Hz
 {
     OUTER_LED = ON;
-    //xAccel = accelRead(XACCL);
-    //yAccel = accelRead(YACCL);
-    //gRead = gyroRead(GRATE);
+    xAccel = accelRead(XACCL);
+    yAccel = accelRead(YACCL);
+    gRead = gyroRead(GRATE);
     
-    prevPos = currPos;
-    currPos = POS1CNT;
-    vel = (INT32)((currPos - prevPos)*50/4);
-
     newData = TRUE;
     _T1IF = 0;
 }
@@ -274,74 +270,19 @@ void init_uart1()
 
 void init_timer1()
 {
-    // Initialize and enable Timer1 for Control Loop at 50Hz
+    // Initialize and enable Timer1 for Control Loop at 10Hz
     T1CONbits.TON = 1;          // Enable Timer
     T1CONbits.TCS = 0;          // Select internal instruction cycle clock
     T1CONbits.TGATE = 0;        // Disable Gated Timer mode
     T1CONbits.TCKPS = 0b11;     // Select 1:256 Prescaler
     TMR1 = 0x00;                // Clear timer register
-    PR1 = 3094;                 // Load the period value for internal osc
+    PR1 = 15470;                // Load the period value for internal osc
 
     IPC0bits.T1IP = 0x01;       // Set Timer 1 Interrupt Priority Level
     IFS0bits.T1IF = 0;          // Clear Timer 1 Interrupt Flag
     IEC0bits.T1IE = 1;          // Timer 1 interrupt Enable
     T1CONbits.TON = 0;          // Timer Start Enable
 }
-
-// Motor PWM timer    
-void init_timer2()
-{
-  	// Initialize and enable Timer2 for Output Compare
-	OC1CONbits.OCM = 0b000;     // Disable Output Compare Module
-	OC1CONbits.OCTSEL = 0;      // Select Timer 2 as output compare time base
-	OC1R = 0;                   // Load the Compare Register Value
-	OC1RS = 0;                // Write the duty cycle for the second PWM pulse
-	OC1CONbits.OCM = 0b110;     // Select the Output Compare mode 
-	OC2CONbits.OCM = 0b000;     // Disable Output Compare Module
-	OC2CONbits.OCTSEL = 0;      // Select Timer 2 as output compare time base
-	OC2R = 0;                   // Load the Compare Register Value
-	OC2RS = 0;                // Write the duty cycle for the second PWM pulse
-	OC2CONbits.OCM = 0b110;     // Select the Output Compare mode 
-
-	T2CONbits.TON = 0;          // Disable Timer
-	T2CONbits.TCS = 0;          // Select internal instruction cycle clock
-	T2CONbits.TGATE = 0;        // Disable Gated Timer mode
-	T2CONbits.TCKPS = 0b01;     // Select 1:8 Prescaler
-	TMR2 = 0x00;                // Clear timer register
-	PR2 = 500;                  // Load the period value
-
-	IPC1bits.T2IP = 0x01;       // Set Timer 2 Interrupt Priority Level
-	IFS0bits.T2IF = 0;          // Clear Timer 2 Interrupt Flag
-	IEC0bits.T2IE = 0;          // Timer 2 interrupt enable
-	T2CONbits.TON = 1;          // Start Timer
-}
-
-void setMotorSpeed(INT16 speed)
-{
-	if(speed >= 0)
-	{
-		OC2RS = 0;
-		if(speed < PRD) OC1RS = speed;
-		else            OC1RS = PRD;
-	}
-
-	else
-	{
-		OC1RS = 0;
-		if(speed >-PRD) OC2RS = -speed;
-		else            OC1RS = PRD;
-	}
-}
-
-void init_qei1()
-{
-  	//QEI Interface
-	QEI1CONbits.QEIM = 0b111;       // QEI enabled in x4 mode, POSCNT reset by match 
-	DFLT1CONbits.QEOUT = 1;         // Digital filter outputs enabled
-	DFLT1CONbits.QECK = 0b010;      //1:4 for digital filter
-	DFLT1CONbits.CEID = 1;          //Count error interrupt disabled
-	MAX1CNT = 0xFFFF;               //MAXCNT to 2^16-1
-}    
 
 int main()
 {
@@ -357,36 +298,22 @@ int main()
     init_spi();
     init_adc();
     init_timer1();
-    init_timer2();
-    init_qei1();
             
     TX_string("Wait\r\n");
     delay(1000);
     TX_string("Start\r\n");
         
     T1CONbits.TON = 1;
-    ENABLE_MOTOR;
-    
-    POS1CNT = 0;
-    setMotorSpeed(70);
     
     while(1)
     {
         if( newData == TRUE)
         {
-            /*
             TX_snum5(xAccel);
             TX('\t');
             TX_snum5(yAccel);
             TX('\t');
             TX_snum5(gRead);
-            TX_string("\r\n");
-            */
-            TX_snum5(currPos);
-            TX('\t');
-            TX_snum5(prevPos);
-            TX('\t');
-            TX_snum5(vel);
             TX_string("\r\n");
                 
             OUTER_LED = OFF;            

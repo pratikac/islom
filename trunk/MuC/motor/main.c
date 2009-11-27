@@ -43,12 +43,14 @@ volatile INT16 prevPos = 0;
 volatile INT16 currPos = 0;
 volatile INT16 vel = 0;     // count/s
 volatile INT16 vel_profile = 0;
-INT16 accel = 500;           // add this to vel every interrupt
+volatile INT16 accel = 100;           // add this to vel every interrupt
 INT16 vel_error;
 INT16 Kp=4, Kd=0;
 INT16 motorCommand = 0;
 
 void setMotorSpeed (INT16 speed);
+volatile INT16 plateau_flag = 0;
+volatile INT16 plateau_count;
 void _ISR _NOPSV _T1Interrupt(void) //Running at 50Hz
 {
     OUTER_LED = ON;
@@ -58,7 +60,18 @@ void _ISR _NOPSV _T1Interrupt(void) //Running at 50Hz
     vel = (INT32)((currPos - prevPos)*50);      // PID on 4*counts
     vel_profile += accel;
     if(vel_profile > 4000)
+    {
+        if(plateau_flag == 0)
+            plateau_flag = 1;
+        else
+            plateau_count++;
+        if(plateau_count == 300)
+            accel = accel*-1;
         vel_profile = 4000;
+    } 
+    if(vel_profile < 0)
+        vel_profile = 0;
+
     vel_error = vel_profile - vel;
     motorCommand += (INT32)(Kp*vel_error/256);
     setMotorSpeed(motorCommand);    
