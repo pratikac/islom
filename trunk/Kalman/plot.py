@@ -20,7 +20,7 @@ FREQ = 10                       # 50 Hz
 dt = 1/FREQ
 RAD2DEG = 180/np.pi
 
-f = open('data5.txt', 'r');
+f = open('data6.txt', 'r');
 
 prev_gyroAngle = 0.0
 count = 0;

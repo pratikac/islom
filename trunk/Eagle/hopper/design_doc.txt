@@ -1,0 +1,22 @@
+Use TCM interface board for gndstation
+
+Design req. main hopper board
+	
+	XBee				- UART			2x 10 pin BERG-F (with footprint)
+	Programing port		- PGDM/ PGDI	1x 10 pin FRC (compatible with other boards)
+	2 motor+encoder		- QEI			2x 6 pin FRC
+
+	Gyro				- SPI			seperate small board 4x 2mm DOUBLE BERG-F
+	Accelerometer		- SPI			Joins main board in two places, SPI and POWER
+
+	Battery check		- 1 ADC
+
+	2 motor drivers		- 2 PWM + DIGITAL POWER + BATTERY POWER
+	PTH
+	LDO
+	Battery conenctor
+	Slide switch
+	Interrupt switch
+	3 LEDs
+
+	
