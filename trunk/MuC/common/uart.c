@@ -1,4 +1,4 @@
-#define BAUDRATE	19200
+#define BAUDRATE	38400
 #define BRGVAL		(((FCY/BAUDRATE)/16)-1)
 
 char rxChar;
@@ -92,15 +92,37 @@ void TX2_num5(unsigned int x)
   TX2(x+0x30);
 }
 
-void TX_snum5(signed int i) {
+void TX_snum5(signed int i) 
+{
   unsigned int x,y;
-  if(i<0){
+  if(i<0)
+  {
       x = -i;
       TX('-');
   }
   else 
     x = i;    
   
+  y=x/10000;TX(y+0x30);x-=(y*10000);
+  y=x/1000;TX(y+0x30);x-=(y*1000);
+  y=x/100;TX(y+0x30);x-=(y*100);
+  y=x/10;TX(y+0x30);x-=(y*10);
+  TX(x+0x30);
+}
+
+void TX_snum7(signed int i) 
+{
+  unsigned int x,y;
+  if(i<0)
+  {
+      x = -i;
+      TX('-');
+  }
+  else 
+    x = i;    
+  
+  y=x/1000000;TX(y+0x30);x-=(y*1000000);
+  y=x/100000;TX(y+0x30);x-=(y*100000);
   y=x/10000;TX(y+0x30);x-=(y*10000);
   y=x/1000;TX(y+0x30);x-=(y*1000);
   y=x/100;TX(y+0x30);x-=(y*100);

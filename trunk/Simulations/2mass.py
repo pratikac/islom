@@ -64,6 +64,8 @@ Tavail_array = []
 m_array= []
 r_array= []
 w_array = []
+P_array=[]
+
 for i in range(100):
     m = 0.3 + 0.008*i
     Ewaste = M*g*(H-l0)/(1+ M/m)
@@ -82,19 +84,22 @@ for i in range(100):
 
     I = (V - Ke*w1_max*eta)/Ra                                   #neglect inductance, find current
     Tavail = eta*Km*I
-    print "I: ", I, "P_op: ", T*w1_max, "P_waste: ", I*I*Ra
+    #print "I: ", I, "P_op: ", T*w1_max, "P_waste: ", I*I*Ra
 
     x_array.append(1000*x)
-    w_array.append(w1_max)
+    w_array.append(w1_max/2/np.pi*60)
     m_array.append(m)
     r_array.append(1000*r)
     Treq_array.append(1000*T)
     Tavail_array.append(1000*Tavail)
+    P_array.append(T*w1_max*100)
 
 plt.figure(1)
 plt.plot(m_array, x_array, 'b-', label='Extension, mm')
 plt.plot(m_array, Treq_array, 'g-', label='Torque req., mNm')
-plt.plot(m_array, Tavail_array, 'k-', label='Torque avail., mNm')
+plt.plot(m_array, w_array, 'r-', label='Omega [RPM]')
+plt.plot(m_array, P_array, 'y-', label='Power req x100, W')
+#plt.plot(m_array, Tavail_array, 'k-', label='Torque avail., mNm')
 plt.xlabel('m (kg)')
 plt.grid()
 plt.legend(loc="best")

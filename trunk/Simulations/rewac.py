@@ -56,13 +56,13 @@ count = 0
 while count<100:
     count += 1
     dist_wheel += 0.001
-#r_wheel += 0.0002
+    #r_wheel += 0.0002
     plotx_array.append(dist_wheel)
     
     # Stupid vars, recalculate
-    m_wheel = 1.5           
-    d_cg = m_wheel*dist_wheel/(m+m_wheel+1)
-    M = m_wheel + 1.0
+    m_wheel = 0.5           
+    M = m_wheel + 2.0
+    d_cg = m_wheel*dist_wheel/(m + m_wheel + (M - m_wheel))
     w = sqrt(k/M)
     
     Ewaste = M*g*(H-l0)/(1+ M/m)
@@ -72,12 +72,12 @@ while count<100:
     h_cg = (h_m_cg*m + h_M_cg*M)/(m+M)  # Height of CG from ground
 
     init_pitch = -arctan2(d_cg, h_cg-pre_extension)
-    print init_pitch
+    #print init_pitch
     final_pitch = 30*DEG2RAD
 
     J_wheel = m_wheel*r_wheel*r_wheel
     # Neglect the contribution to J_body by the reaction wheel for now
-    J_body = 1.0*(pow((h_cg - h_M_cg),2) + d_cg*d_cg) + m*(pow((h_cg - h_m_cg),2) + d_cg*d_cg)
+    J_body = (M - m_wheel)*(pow((h_cg - h_M_cg),2) + d_cg*d_cg) + m*(pow((h_cg - h_m_cg),2) + d_cg*d_cg)
 
     x1 = 0                      # height of M at full compression (during stance)
 
@@ -134,34 +134,33 @@ while count<100:
     
     # Need to go to init_pitch from pitch_lf with this theta_dot (and omega by rewac)
     # Also, need a small omega_reorient to avoid problem with coriolis
-    T_min_reorient = T_air*0.5
+    T_min_reorient = T_air*0.3
     omega_reorient = (final_pitch - pitch_lf)/T_min_reorient - theta_dot
     omega_wheel = -(omega_reorient*(J_body+J_wheel))/J_wheel
-    I = (V - Ke*absolute(omega_wheel)*eta)/Ra
-    T = Km*eta*I                                # Available torque
-    omega_dot = omega_wheel/(T_air*0.2)
+    
+    #I = (V - Ke*absolute(omega_wheel)*eta)/Ra
+    #T = Km*eta*I                                # Available torque
+    omega_dot = omega_wheel/(T_air*0.1)
     T_needed = J_wheel*absolute(omega_dot)
    
-    P_w = I*I*Ra
-    P_op = abs(T_needed*omega_wheel)
+    #P_w = I*I*Ra
+    P_op = absolute(T_needed*omega_wheel)
     
-#ploty4_array.append(T*10 - T_needed*10)
     ploty4_array.append(T_needed)
-    ploty5_array.append(T)
-    ploty1_array.append(P_w)
-#ploty1_array.append(omega_wheel/2/pi*60/100)
-    ploty2_array.append(P_op)
-    ploty6_array.append(I)
+    #ploty5_array.append(T)
+    ploty2_array.append(omega_wheel/2/pi*60/100)
+    ploty3_array.append(P_op)
+    #ploty6_array.append(I)
 
 print "Done"
 
 figure(1)
 plot(plotx_array, ploty4_array, 'r-', label='Torque needed (N)')
-plot(plotx_array, ploty5_array, 'b-', label='Torque avail (N)')
-#plot(plotx_array, ploty1_array, 'g-', label='Omega RPM/100')
-#plot(plotx_array, ploty2_array, 'y-', label='P_output (W)')
-plot(plotx_array, ploty1_array, 'y-', label='P_waste (W)')
-plot(plotx_array, ploty6_array, 'k-', label='I (A)')
+#plot(plotx_array, ploty5_array, 'b-', label='Torque avail (N)')
+plot(plotx_array, ploty2_array, 'b-', label='Omega RPM/100')
+plot(plotx_array, ploty3_array, 'g-', label='P_output (W)')
+#plot(plotx_array, ploty1_array, 'y-', label='P_waste (W)')
+#plot(plotx_array, ploty6_array, 'k-', label='I (A)')
 title("Variation with CG distance (r = 6 cm)")
 legend(loc="best")
 grid()

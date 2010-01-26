@@ -2,7 +2,7 @@
 MagicCookie={0b13fe8c-dfe0-40eb-8900-6712719559a7}
 Version=1.0
 [File000]
-Location=E:\Tech\Slom\slom\trunk\MuC\test\main.o
+Location=D:\Tech\Slom\repo\trunk\MuC\test\main.o
 Folder=Intermediary
 DeviceName=dsPIC33FJ64MC804
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -15,7 +15,7 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=-D__DEBUG
 [File001]
-Location=E:\Tech\Slom\slom\trunk\MuC\test\rewac.cof
+Location=D:\Tech\Slom\repo\trunk\MuC\test\rewac.cof
 Folder=Output
 DeviceName=dsPIC33FJ64MC804
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
@@ -28,7 +28,7 @@ ToolArgsString=-o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)" -Map="$(BINDIR_)$(TAR
 TraceCmdString=
 DebugOptions=--defsym=__MPLAB_DEBUG=1
 [File002]
-Location=E:\Tech\Slom\slom\trunk\MuC\test\rewac.hex
+Location=D:\Tech\Slom\repo\trunk\MuC\test\rewac.hex
 Folder=Output
 DeviceName=dsPIC33FJ64MC804
 LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}

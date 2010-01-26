@@ -5,14 +5,6 @@
 #include "../common/uart.c"
 #include "../common/macros.h"
 
-typedef unsigned long UINT32;
-typedef signed long INT32;
-typedef unsigned int UINT16;
-typedef signed int INT16;
-typedef unsigned char UINT8;
-typedef signed char INT8;
-typedef unsigned char bool;
-
 #define INNER_LED	_LATC2
 #define OUTER_LED	_LATB4
 #define ACCEL       _LATC1
@@ -27,7 +19,7 @@ _FOSC(FCKSM_CSDCMD & OSCIOFNC_ON & POSCMD_NONE);
 _FWDT(FWDTEN_OFF);
 _FPOR(PWMPIN_ON & HPOL_ON & LPOL_ON & FPWRT_PWR1);
 _FGS(GSS_OFF & GCP_OFF & GWRP_OFF);
-_FICD(JTAGEN_OFF & COE_ON);
+_FICD(JTAGEN_OFF & ICS_PGD2);
 
 #define M	    43
 #define N1	    2
@@ -44,6 +36,7 @@ _FICD(JTAGEN_OFF & COE_ON);
 #define GANGL   0x0E00
 
 #define SIGNED14(x) (((x & (1<<13))==0) ? (x & (0x1FFF)) : ((x & (0x1FFF)) | 0xE000))
+#define SIGNED12(x) (((x & (1<<11))==0) ? (x & (0x07FF)) : ((x & (0x7FFF)) | 0xF800))
 
 #define IN1         _LATC7
 #define IN2         _LATC6
@@ -59,21 +52,103 @@ signed int accelRead(unsigned int addr);
 signed int gyroRead(unsigned int addr);
 
 volatile int newData = FALSE;
-volatile INT16 xAccel;
-volatile INT16 yAccel;
+volatile INT16 tiltX;
+volatile INT16 tiltY;
+volatile INT16 tilt;
 volatile INT16 gRead;
 
-volatile INT16 prevPos = 0;
-volatile INT16 currPos = 0;
-volatile INT16 vel = 0;
+// Kalman filter variables
+#define GYRO_SCALE              (0.07326)
+#define ACCEL_SCALE             (0.0004625)
+#define gravity                 (9.806)
+#define FSAMP                   (10)
+#define RAD2DEG                 (180.0/3.1415)
+
+// 10.6
+volatile INT16 GYRO_MULT = GYRO_SCALE*64.0;
+volatile INT16 TILT_MULT = 0.1*64.0;
+
+// Persistant states (10.6) -- covaraince is < 1
+volatile INT16 P_00 = 64.0;
+volatile INT16 P_01 = 0;
+volatile INT16 P_10 = 0;
+volatile INT16 P_11 = 64.0;
+
+// Constants (10.6)
+volatile INT16 A_01 = 64.0/FSAMP;
+volatile INT16 B_00 = 64.0/FSAMP;
+
+// Accelerometer variance (8.8) = 22*ACCEL_SCALE*g
+volatile INT16 Sz = 22*ACCEL_SCALE*gravity*64.0;
+
+// Gyro variance (10.6) = 96E-6
+volatile INT16 Sw_00 = 1;
+
+// Output (10.6)
+volatile INT16 x_00 = 0;
+volatile INT16 x_10= 0;
+
+// Filter vars (all 10.6)
+volatile INT16 inn_00 = 0, s_00 = 0, AP_00 = 0, AP_01 = 0, AP_10 = 0, AP_11 = 0, K_00 = 0, K_10 = 0;
+volatile INT16 to_send[7] = {0};
+
+void do_kalman(INT16 gRead, INT16 tilt)
+{
+    // Update the state estimate by extrapolating current state estimate with input u.
+    // x = A * x + B * u
+    x_00 = x_00 + ((INT32)((INT32)A_01 * (INT32)x_10))/64 + ((INT32)((INT32)B_00 * (INT32)gRead))/64;
+    to_send[0] = x_00;
+
+    // Compute the innovation -- error between measured value and state.
+    // inn = y - c * x
+    inn_00 = tilt - x_00;
+    to_send[1] = inn_00;    
+
+    // Compute the covariance of the innovation.
+    // s = C * P * C' + Sz
+    s_00 = P_00 + Sz;
+    to_send[2] = s_00;
+
+    // Compute AP matrix for use below.
+    // AP = A * P
+    AP_00 = P_00 + ((INT32)((INT32)A_01 * (INT32)P_10))/64;
+    AP_01 = P_01 + ((INT32)((INT32)A_01 * (INT32)P_11))/64;
+    AP_10 = P_10;
+    AP_11 = P_11;
+    to_send[3] = AP_00;
+    
+    // Compute the kalman gain matrix.
+    // K = A * P * C' * inv(s)
+    K_00 = ((INT32)((INT32)AP_00*64)) / s_00;
+    K_10 = ((INT32)((INT32)AP_10*64)) / s_00;
+    to_send[4] = K_00;
+
+    // Update the state estimate
+    // x = x + K * inn
+    x_00 = x_00 + ((INT32)((INT32)K_00 * (INT32)inn_00))/64;
+    x_10 = x_10 + ((INT32)((INT32)K_10 * (INT32)inn_00))/64;
+    to_send[5] = x_00;
+
+    // Compute the new covariance of the estimation error
+    // P = A * P * A' - K * C * P * A' + Sw
+    P_00 = AP_00 + ((INT32)((INT32)AP_01 * (INT32)A_01) - (INT32)((INT32)K_00 * (INT32)P_00))/64 + (INT32)(((INT32)((INT32)K_00 * (INT32)P_01)/64) * (INT32)A_01)/64 + Sw_00;
+    P_01 = AP_01 - (INT32)((INT32)K_00 * (INT32)P_01)/64;
+    P_10 = AP_10 + ((INT32)((INT32)AP_11 * (INT32)A_01) - (INT32)((INT32)K_10 * (INT32)P_00))/64 + (INT32)(((INT32)((INT32)K_10 * (INT32)P_01)/64) * (INT32)A_01)/64;
+    P_11 = AP_11 - (INT32)((INT32)K_10 * (INT32)P_01)/64;
+}
 
 void _ISR _NOPSV _T1Interrupt(void) //Running at 10Hz
 {
     OUTER_LED = ON;
-    xAccel = accelRead(XACCL);
-    yAccel = accelRead(YACCL);
-    gRead = gyroRead(GRATE);
+    tiltX = (INT32)(accelRead(XINCL)*TILT_MULT);
+    gRead = (INT32)(gyroRead(GRATE)*GYRO_MULT);
     
+    //convert from quadrants to pitch angle
+    tilt = tiltX;
+        
+    //update filter
+    do_kalman(gRead, tilt);
+
     newData = TRUE;
     _T1IF = 0;
 }
@@ -226,7 +301,10 @@ signed int accelRead(unsigned int addr)
     ACCEL = SEL;
     dataOut = (spiXfer(0x0000) & 0x3FFF);
     ACCEL = DESEL;
-    accelVal = SIGNED14(dataOut);
+    if((addr == XINCL) || (addr == YINCL))
+        accelVal = SIGNED12(dataOut);
+    else
+        accelVal = SIGNED14(dataOut);
     delay_us(5);
 
     return (accelVal);
@@ -303,22 +381,40 @@ int main()
     delay(1000);
     TX_string("Start\r\n");
         
-    T1CONbits.TON = 1;
+    T1CONbits.TON = 1; 
     
+    //remove first trash reading
+    tiltX = accelRead(XINCL);
+    gRead = gyroRead(GRATE);    
     while(1)
     {
         if( newData == TRUE)
         {
-            TX_snum5(xAccel);
-            TX('\t');
-            TX_snum5(yAccel);
-            TX('\t');
             TX_snum5(gRead);
+            TX('\t');
+            TX_snum5(tilt);
+            TX('\t');
+            TX_snum5(x_00);
+            TX('\t');
+            TX_snum5(to_send[0]);
+            TX('\t');
+            TX_snum5(to_send[1]);
+            TX('\t');
+            TX_snum5(to_send[2]);
+            TX('\t');
+            TX_snum5(to_send[3]);
+            TX('\t');
+            TX_snum5(to_send[4]);
+            TX('\t');
+            TX_snum5(to_send[5]);
+            TX('\t');
+            TX_snum5(to_send[6]);
             TX_string("\r\n");
-                
+                             
             OUTER_LED = OFF;            
             newData = FALSE;
         }
     }  
     return 0;      
 };
+
