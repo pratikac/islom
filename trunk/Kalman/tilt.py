@@ -18,9 +18,9 @@ if f:
         while line != "Done\n":
             s = line.split('\t')
             index.append(count)
-            gRate.append(float(s[0])/256.0)
-            tilt.append(float(s[1])/256.0)
-            muCAngle.append(float(s[2])/256.0)
+            gRate.append(float(s[0])/64.0)
+            tilt.append(float(s[1])/64.0)
+            muCAngle.append(float(s[2])/64.0)
             line = f.readline()
             count += 1
 f.close()
@@ -29,7 +29,7 @@ print "Read ",len(index), " lines."
 ACCEL_SCALE = 0.0004625         # g/LSB
 GYRO_SCALE = 0.07326            # deg/s/LSB
 g = 9.80665
-FREQ = 10
+FREQ = 50
 dt = 1.0/FREQ
 RAD2DEG = 180/np.pi
 
@@ -52,7 +52,7 @@ Sz = 22*ACCEL_SCALE*g;
 #Sw_10 = 0.003;
 #Sw_11 = 0.003;
 
-Sw_00 = 92E-6;
+Sw_00 = 1.0/64;
 Sw_01 = 0;
 Sw_10 = 0;
 Sw_11 = 0;
@@ -142,10 +142,13 @@ while c < len(index) :
     c = c + 1
 
 figure(1)
-plot(index, gRate, 'b', label='gRate')
-plot(index, tilt, 'r', label='Tilt')
-#plot(index, muCAngle, 'g', label='muC Kalman')
-plot(index, compAngle, 'y', label='Comp Kalman')
+#plot(index, gRate, 'b', label='gRate')
+plot(index, tilt, 'r', label='Tilt', lw=1.5)
+plot(index, muCAngle, 'g', label='muC Kalman', lw=1.5)
+plot(index, compAngle, 'b', label='Comp Kalman', lw=1.5)
+xlabel('Time [s x50]')
+ylabel('Angle [deg]')
+legend()
 grid()
 show()
 

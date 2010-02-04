@@ -40,5 +40,10 @@ for i in range(len(xP)):
 
 figure(1)
 plot(xP, yP-xP)
+title('arctan(x) - myArcTan(x) : 16 points')
+xlabel('Angle [deg]')
+ylabel('Error [deg]')
 grid()
 show()
+
+
