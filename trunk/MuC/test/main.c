@@ -45,7 +45,7 @@ _FICD(JTAGEN_OFF & ICS_PGD2);
 
 #define ENABLE_MOTOR    {DI1 = 0; DI2 = 1;}
 #define DISABLE_MOTOR   {DI1 = 1; DI2 = 0;}
-#define PRD     500
+#define PRD             (500)
 
 
 signed int accelRead(unsigned int addr);
@@ -61,7 +61,7 @@ volatile INT16 gRead;
 #define GYRO_SCALE              (0.07326)
 #define ACCEL_SCALE             (0.0004625)
 #define gravity                 (9.806)
-#define FSAMP                   (10)
+#define FSAMP                   (50)
 #define RAD2DEG                 (180.0/3.1415)
 
 // 10.6
@@ -78,7 +78,7 @@ volatile INT16 P_11 = 64.0;
 volatile INT16 A_01 = 64.0/FSAMP;
 volatile INT16 B_00 = 64.0/FSAMP;
 
-// Accelerometer variance (8.8) = 22*ACCEL_SCALE*g
+// Accelerometer variance (10.6) = 22*ACCEL_SCALE*g
 volatile INT16 Sz = 22*ACCEL_SCALE*gravity*64.0;
 
 // Gyro variance (10.6) = 96E-6
@@ -153,6 +153,7 @@ void _ISR _NOPSV _T1Interrupt(void) //Running at 10Hz
     _T1IF = 0;
 }
 
+// Main clk freq after PLL = 8291500 Hz
 int init_pll()
 {
     PLLFBD = M - 2;
@@ -348,13 +349,13 @@ void init_uart1()
 
 void init_timer1()
 {
-    // Initialize and enable Timer1 for Control Loop at 10Hz
+    // Initialize and enable Timer1 for Control Loop at 50 Hz
     T1CONbits.TON = 1;          // Enable Timer
     T1CONbits.TCS = 0;          // Select internal instruction cycle clock
     T1CONbits.TGATE = 0;        // Disable Gated Timer mode
     T1CONbits.TCKPS = 0b11;     // Select 1:256 Prescaler
     TMR1 = 0x00;                // Clear timer register
-    PR1 = 15470;                // Load the period value for internal osc
+    PR1 = 3238;                // Load the period value for internal osc
 
     IPC0bits.T1IP = 0x01;       // Set Timer 1 Interrupt Priority Level
     IFS0bits.T1IF = 0;          // Clear Timer 1 Interrupt Flag
@@ -395,22 +396,8 @@ int main()
             TX_snum5(tilt);
             TX('\t');
             TX_snum5(x_00);
-            TX('\t');
-            TX_snum5(to_send[0]);
-            TX('\t');
-            TX_snum5(to_send[1]);
-            TX('\t');
-            TX_snum5(to_send[2]);
-            TX('\t');
-            TX_snum5(to_send[3]);
-            TX('\t');
-            TX_snum5(to_send[4]);
-            TX('\t');
-            TX_snum5(to_send[5]);
-            TX('\t');
-            TX_snum5(to_send[6]);
             TX_string("\r\n");
-                             
+           
             OUTER_LED = OFF;            
             newData = FALSE;
         }
