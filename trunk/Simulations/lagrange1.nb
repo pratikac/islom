@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       145,          7]
-NotebookDataLength[     60050,       1656]
-NotebookOptionsPosition[     59365,       1630]
-NotebookOutlinePosition[     59809,       1648]
-CellTagsIndexPosition[     59766,       1645]
+NotebookDataLength[     48855,       1295]
+NotebookOptionsPosition[     48369,       1276]
+NotebookOutlinePosition[     48812,       1294]
+CellTagsIndexPosition[     48769,       1291]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -186,12 +186,10 @@ Cell[BoxData[{
     RowBox[{"Function", "[", 
      RowBox[{"t", ",", " ", "l0"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{
-   RowBox[{"eqConstraintSpring2", " ", "=", " ", 
-    RowBox[{"l", " ", "\[Rule]", " ", 
-     RowBox[{"Function", "[", 
-      RowBox[{"t", ",", " ", "lmax"}], "]"}]}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+  RowBox[{"eqConstraintSpring2", " ", "=", " ", 
+   RowBox[{"l", " ", "\[Rule]", " ", 
+    RowBox[{"Function", "[", 
+     RowBox[{"t", ",", " ", "lmax"}], "]"}]}]}], ";"}], "\n", 
  RowBox[{
   RowBox[{"L", " ", "=", " ", 
    RowBox[{"T", " ", "-", "V"}]}], ";"}], "\[IndentingNewLine]", 
@@ -201,19 +199,21 @@ Cell[BoxData[{
     RowBox[{"L", " ", "/.", " ", "eqConstraintStance"}]}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
-  RowBox[{"eq1", " ", "=", " ", 
-   RowBox[{
-    RowBox[{"D", "[", 
-     RowBox[{
-      RowBox[{"D", "[", 
-       RowBox[{"L", ",", " ", 
-        RowBox[{"D", "[", 
-         RowBox[{
-          RowBox[{"x", "[", "t", "]"}], ",", " ", "t"}], "]"}]}], "]"}], ",", 
-      " ", "t"}], "]"}], " ", "\[Equal]", " ", 
-    RowBox[{"D", "[", 
-     RowBox[{"L", ",", " ", 
-      RowBox[{"x", "[", "t", "]"}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"eq1", " ", "=", " ", 
+    RowBox[{
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{"D", "[", 
+        RowBox[{"L", ",", " ", 
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"x", "[", "t", "]"}], ",", " ", "t"}], "]"}]}], "]"}], ",",
+        " ", "t"}], "]"}], " ", "\[Equal]", " ", 
+     RowBox[{"D", "[", 
+      RowBox[{"L", ",", " ", 
+       RowBox[{"x", "[", "t", "]"}]}], "]"}]}]}], ";"}], 
+  "  "}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"eq2", " ", "=", " ", 
    RowBox[{
@@ -489,7 +489,7 @@ Cell[BoxData[{
    RowBox[{"eqSpring2", " ", "=", " ", 
     RowBox[{"{", 
      RowBox[{"eq1", ",", " ", "eq2", ",", " ", "eq3", ",", " ", "eq4"}], 
-     "}"}]}], ";"}], "\n"}], "\[IndentingNewLine]", 
+     "}"}]}], ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
    StyleBox["values",
@@ -509,6 +509,16 @@ Cell[BoxData[{
      FontFamily->"Courier New",
      FontColor->GrayLevel[0]], 
     RowBox[{
+     RowBox[{
+      StyleBox["M",
+       FontFamily->"Courier New",
+       FontColor->GrayLevel[0]], 
+      StyleBox[" ",
+       FontFamily->"Courier New",
+       FontColor->GrayLevel[0]], 
+      StyleBox["\[Rule]",
+       FontFamily->"Courier New",
+       FontColor->GrayLevel[0]], " ", "4.7"}], ",", " ", 
      StyleBox[
       RowBox[{"mw", " ", "\[Rule]", " ", "1.5"}],
       FontFamily->"Courier New",
@@ -540,9 +550,7 @@ Cell[BoxData[{
       FontFamily->"Courier New",
       FontColor->GrayLevel[0]], 
      StyleBox[
-      RowBox[{"Iw", " ", "\[Rule]", " ", 
-       RowBox[{"1.5", "*", "0.6", "*", 
-        RowBox[{"0.6", "/", "2"}]}]}],
+      RowBox[{"Iw", " ", "\[Rule]", " ", "0.02"}],
       FontFamily->"Courier New",
       FontColor->GrayLevel[0]], 
      StyleBox[",",
@@ -552,7 +560,7 @@ Cell[BoxData[{
       FontFamily->"Courier New",
       FontColor->GrayLevel[0]], 
      StyleBox[
-      RowBox[{"Ib", " ", "\[Rule]", " ", "0.5"}],
+      RowBox[{"Ib", " ", "\[Rule]", " ", "0.086"}],
       FontFamily->"Courier New",
       FontColor->GrayLevel[0]], 
      StyleBox[",",
@@ -651,8 +659,7 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"eqSpring2", " ", "=", " ", 
-   RowBox[{"eqSpring2", " ", "/.", " ", "values"}]}], 
-  ";"}], "\[IndentingNewLine]"}], "Input",
+   RowBox[{"eqSpring2", " ", "/.", " ", "values"}]}], ";"}], "\n"}], "Input",
  CellChangeTimes->{{3.4753842219676*^9, 3.4753842260656*^9}, 
    3.4754092106085997`*^9, 3.4754137105916*^9, 3.4768329959484*^9, {
    3.4768332159964*^9, 3.4768332399764*^9}, 3.4768332781594*^9, {
@@ -690,402 +697,448 @@ Cell[BoxData[{
    3.4771935930327997`*^9, 3.4771936231038*^9}, {3.4771941292558002`*^9, 
    3.4771941462958*^9}, {3.4771966926858*^9, 3.4771966930998*^9}, {
    3.4772008944468*^9, 3.4772010148838*^9}, {3.4772010601018*^9, 
-   3.4772010883898*^9}, {3.4772011765257998`*^9, 3.4772013193638*^9}}],
+   3.4772010883898*^9}, {3.4772011765257998`*^9, 3.4772013193638*^9}, {
+   3.47728996616615*^9, 3.47728997523915*^9}, {3.47729080392315*^9, 
+   3.4772908122561502`*^9}, {3.4777896051054497`*^9, 
+   3.4777896069029503`*^9}, {3.47778964945795*^9, 3.47778965559795*^9}, 
+   3.47779214394195*^9, {3.47791098780945*^9, 3.47791099350345*^9}, {
+   3.47791206835745*^9, 3.47791208344545*^9}, {3.4779183506834497`*^9, 
+   3.47791836176145*^9}, 3.47791864793745*^9, {3.47791869517945*^9, 
+   3.4779187009844503`*^9}}],
 
-Cell[CellGroupData[{
-
-Cell[BoxData[
+Cell[BoxData[{
  RowBox[{
-  StyleBox["\[IndentingNewLine]",
-   FontFamily->"Courier New",
-   FontColor->GrayLevel[0]], 
   RowBox[{
-   StyleBox[
-    RowBox[{
-     RowBox[{"start", " ", "=", " ", "0"}], ";"}],
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], 
-   StyleBox["\[IndentingNewLine]",
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], 
    RowBox[{
-    RowBox[{"initFlight", 
-     StyleBox[" ",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox["=",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
+    RowBox[{"spring2Phase", "[", "]"}], " ", ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
      RowBox[{
-      StyleBox["{",
+      RowBox[{"{", "}"}], ",", 
+      StyleBox["\[IndentingNewLine]",
        FontFamily->"Courier New",
        FontColor->GrayLevel[0]], 
-      StyleBox[" ",
-       FontFamily->"Courier New",
-       FontColor->GrayLevel[0]], 
-      RowBox[{
-       StyleBox[
-        RowBox[{
-         RowBox[{"x", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}],
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[",",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[" ",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[
-        RowBox[{
-         RowBox[{"y", "[", "0", "]"}], " ", "\[Equal]", " ", "1"}],
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[",",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[" ",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[
-        RowBox[{
-         RowBox[{"l", "[", "0", "]"}], " ", "\[Equal]", " ", "0.3"}],
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[",",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[" ",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
+      StyleBox[
        RowBox[{
-        StyleBox[
-         RowBox[{"theta", "[", "0", "]"}],
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox["\[Equal]",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], " ", "1"}], 
-       StyleBox[",",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[" ",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[
-        RowBox[{
-         RowBox[{"phi", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}],
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[",",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[" ",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[
-        RowBox[{
-         RowBox[{
-          RowBox[{"x", "'"}], "[", "0", "]"}], "\[Equal]", " ", "1"}],
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[",",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[" ",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[
-        RowBox[{
-         RowBox[{
-          RowBox[{"y", "'"}], "[", "0", "]"}], "\[Equal]", " ", "0"}],
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[",",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[" ",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[
-        RowBox[{
-         RowBox[{
-          RowBox[{"l", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", "0"}],
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[",",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[" ",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[
-        RowBox[{
-         RowBox[{
-          RowBox[{"theta", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
-         RowBox[{"-", "1"}]}],
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[",",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[" ",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox[
-        RowBox[{
-         RowBox[{
-          RowBox[{"phi", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", "0"}],
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]]}], 
-      StyleBox["}",
-       FontFamily->"Courier New",
-       FontColor->GrayLevel[0]]}]}], 
-    StyleBox[";",
-     FontFamily->"Courier New",
-     FontColor->GrayLevel[0]]}], 
-   StyleBox["\[IndentingNewLine]",
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], 
-   StyleBox[
-    RowBox[{
-     RowBox[{"solveForFlight", " ", "=", " ", 
-      RowBox[{"{", 
-       RowBox[{
-       "x", ",", " ", "y", ",", " ", "l", ",", " ", "theta", ",", " ", 
-        "phi"}], "}"}]}], ";"}],
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], 
-   StyleBox["\[IndentingNewLine]",
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], 
-   StyleBox["\[IndentingNewLine]",
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], 
-   RowBox[{
-    RowBox[{
-     StyleBox["solFlight",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox[" ",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox["=",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox[" ",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     RowBox[{
-      StyleBox["First",
-       FontFamily->"Courier New",
-       FontColor->GrayLevel[0]], 
-      StyleBox["[",
-       FontFamily->"Courier New",
-       FontColor->GrayLevel[0]], 
-      RowBox[{
-       StyleBox["NDSolve",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       StyleBox["[",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       RowBox[{
-        StyleBox[
-         RowBox[{"Join", "[", 
-          RowBox[{"eqFlight", ",", " ", "initFlight"}], "]"}],
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox["solveForFlight",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[
-         RowBox[{"{", 
-          RowBox[{"t", ",", " ", "0", ",", " ", "1"}], "}"}],
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox["Method",
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], 
-         StyleBox[" ",
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], 
-         StyleBox["\[Rule]",
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], " ", 
-         RowBox[{"{", 
-          RowBox[{"\"\<EventLocator\>\"", ",", " ", 
+        RowBox[{"start", " ", "=", " ", "0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"initSpring2", "=", 
+         RowBox[{"{", " ", 
+          RowBox[{
            RowBox[{
-            RowBox[{"\"\<Event\>\"", " ", "\[Rule]", " ", 
-             RowBox[{"(", 
-              RowBox[{
-               RowBox[{"y", "[", "t", "]"}], " ", "-", " ", 
+            RowBox[{"x", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",", 
+           " ", 
+           RowBox[{
+            RowBox[{"y", "[", "0", "]"}], " ", "\[Equal]", " ", "1"}], ",", 
+           " ", 
+           RowBox[{
+            RowBox[{"theta", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], 
+           ",", " ", 
+           RowBox[{
+            RowBox[{"phi", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",", 
+           " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"x", "'"}], "[", "0", "]"}], "\[Equal]", " ", "1"}], ",",
+            " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"y", "'"}], "[", "0", "]"}], "\[Equal]", " ", "0"}], ",",
+            " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"theta", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
+            "1"}], ",", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"phi", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
+            "0"}]}], "}"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"solveForSpring2", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", " ", "y", ",", " ", "theta", ",", " ", "phi"}], 
+          "}"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"solSpring2", " ", "=", " ", 
+         RowBox[{"First", "[", 
+          RowBox[{"NDSolve", "[", 
+           RowBox[{
+            RowBox[{"Join", "[", 
+             RowBox[{"eqSpring2", ",", " ", "initSpring2"}], "]"}], ",", " ", 
+            "solveForSpring2", ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"t", ",", " ", "0", ",", " ", "1"}], "}"}], ",", " ", 
+            RowBox[{"Method", " ", "\[Rule]", " ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<EventLocator\>\"", ",", " ", 
                RowBox[{
-                RowBox[{"(", 
-                 RowBox[{"len", " ", "-", " ", 
-                  RowBox[{"l", "[", "t", "]"}], " ", "-", " ", 
-                  RowBox[{"d", " ", 
-                   RowBox[{"Sin", "[", 
+                RowBox[{"\"\<Event\>\"", " ", "\[Rule]", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"y", "[", "t", "]"}], " ", "-", " ", 
+                   RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{"len", " ", "-", " ", 
+                    RowBox[{"l", "[", "t", "]"}], " ", "-", " ", 
+                    RowBox[{"d", " ", 
+                    RowBox[{"Sin", "[", 
                     RowBox[{"theta", "[", "t", "]"}], "]"}]}]}], ")"}], " ", 
-                RowBox[{"Cos", "[", 
-                 RowBox[{"theta", "[", "t", "]"}], "]"}]}]}], ")"}]}], " ", "/.",
-             " ", "values"}], ",", " ", 
-           RowBox[{"\"\<EventAction\>\"", " ", ":>", " ", 
-            RowBox[{"Throw", "[", 
+                    RowBox[{"Cos", "[", 
+                    RowBox[{"theta", "[", "t", "]"}], "]"}]}]}], ")"}]}], " ",
+                 "/.", " ", "values"}], ",", " ", 
+               RowBox[{"\"\<EventAction\>\"", " ", ":>", " ", 
+                RowBox[{"Throw", "[", 
+                 RowBox[{
+                  RowBox[{"end", " ", "=", " ", "t"}], ",", " ", 
+                  "\"\<StopIntegration\>\""}], "]"}]}]}], "}"}]}]}], "]"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"ParametricPlot", "[", 
+         RowBox[{
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"{", 
+            RowBox[{
              RowBox[{
-              RowBox[{"end", " ", "=", " ", "t"}], ",", " ", 
-              "\"\<StopIntegration\>\""}], "]"}]}]}], "}"}]}]}], "]"}], 
-      "]"}]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{"endFlight", " ", "=", 
-    StyleBox[
-     RowBox[{" ", 
-      StyleBox[" ",
+              RowBox[{"x", "[", "t", "]"}], " ", "/.", " ", "solSpring2"}], 
+             ",", " ", 
+             RowBox[{
+              RowBox[{"y", "[", "t", "]"}], " ", "/.", " ", "solSpring2"}]}], 
+            "}"}], "]"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", " ", "0", ",", " ", "end"}], "}"}], ",", " ", 
+          RowBox[{"AxesLabel", " ", "\[Rule]", " ", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", " ", "y"}], "}"}]}], ",", " ", 
+          RowBox[{"LabelStyle", " ", "\[Rule]", " ", 
+           RowBox[{"Directive", "[", 
+            RowBox[{"Black", ",", " ", "Bold"}], "]"}]}], ",", " ", 
+          RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+           RowBox[{"{", 
+            RowBox[{"Blue", ",", " ", 
+             RowBox[{"Thickness", "[", "0.01", "]"}]}], "}"}]}], ",", 
+          RowBox[{"GridLines", " ", "\[Rule]", " ", "Automatic"}], ",", " ", 
+          RowBox[{"GridLinesStyle", " ", "\[Rule]", " ", 
+           RowBox[{"Directive", "[", "Dashed", "]"}]}], ",", " ", 
+          RowBox[{"AspectRatio", " ", "\[Rule]", " ", "1"}]}], " ", "]"}]}],
        FontFamily->"Courier New",
-       FontColor->GrayLevel[0]]}]], 
-    RowBox[{
-     StyleBox["Evaluate",
+       FontColor->GrayLevel[0]]}], 
+     StyleBox["\[IndentingNewLine]",
       FontFamily->"Courier New",
       FontColor->GrayLevel[0]], 
-     StyleBox["[",
+     StyleBox["]",
       FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
+      FontColor->GrayLevel[0]]}]}], 
+   StyleBox[";",
+    FontFamily->"Courier New",
+    FontColor->GrayLevel[0]]}], "\n"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"spring1Phase", "[", "]"}], " ", ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
      RowBox[{
+      RowBox[{"{", "}"}], ",", 
+      StyleBox["\[IndentingNewLine]",
+       FontFamily->"Courier New",
+       FontColor->GrayLevel[0]], 
+      StyleBox[
+       RowBox[{
+        RowBox[{"start", " ", "=", " ", "0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"initSpring1", "=", 
+         RowBox[{"{", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"x", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",", 
+           " ", 
+           RowBox[{
+            RowBox[{"y", "[", "0", "]"}], " ", "\[Equal]", " ", "1"}], ",", 
+           " ", 
+           RowBox[{
+            RowBox[{"theta", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], 
+           ",", " ", 
+           RowBox[{
+            RowBox[{"phi", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",", 
+           " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"x", "'"}], "[", "0", "]"}], "\[Equal]", " ", "1"}], ",",
+            " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"y", "'"}], "[", "0", "]"}], "\[Equal]", " ", "0"}], ",",
+            " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"theta", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
+            "1"}], ",", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"phi", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
+            "0"}]}], "}"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"solveForSpring1", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", " ", "y", ",", " ", "theta", ",", " ", "phi"}], 
+          "}"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"solSpring1", " ", "=", " ", 
+         RowBox[{"First", "[", 
+          RowBox[{"NDSolve", "[", 
+           RowBox[{
+            RowBox[{"Join", "[", 
+             RowBox[{"eqSpring1", ",", " ", "initSpring1"}], "]"}], ",", " ", 
+            "solveForSpring1", ",", " ", 
+            RowBox[{"{", 
+             RowBox[{"t", ",", " ", "0", ",", " ", "1"}], "}"}], ",", " ", 
+            RowBox[{"Method", " ", "\[Rule]", " ", 
+             RowBox[{"{", 
+              RowBox[{"\"\<EventLocator\>\"", ",", " ", 
+               RowBox[{
+                RowBox[{"\"\<Event\>\"", " ", "\[Rule]", " ", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"y", "[", "t", "]"}], " ", "-", "  ", 
+                   RowBox[{"2", "*", 
+                    RowBox[{"hmax", "/", "3"}]}]}], ")"}]}], " ", "/.", " ", 
+                "values"}], ",", " ", 
+               RowBox[{"\"\<EventAction\>\"", " ", ":>", " ", 
+                RowBox[{"Throw", "[", 
+                 RowBox[{
+                  RowBox[{"end", " ", "=", " ", "t"}], ",", " ", 
+                  "\"\<StopIntegration\>\""}], "]"}]}]}], "}"}]}]}], "]"}], 
+          "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+        RowBox[{"ParametricPlot", "[", 
+         RowBox[{
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"x", "[", "t", "]"}], " ", "/.", " ", "solSpring1"}], 
+             ",", " ", 
+             RowBox[{
+              RowBox[{"y", "[", "t", "]"}], " ", "/.", " ", "solSpring1"}]}], 
+            "}"}], "]"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", " ", "0", ",", " ", "end"}], "}"}], ",", " ", 
+          RowBox[{"AxesLabel", " ", "\[Rule]", " ", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", " ", "y"}], "}"}]}], ",", " ", 
+          RowBox[{"LabelStyle", " ", "\[Rule]", " ", 
+           RowBox[{"Directive", "[", 
+            RowBox[{"Black", ",", " ", "Bold"}], "]"}]}], ",", " ", 
+          RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+           RowBox[{"{", 
+            RowBox[{"Blue", ",", " ", 
+             RowBox[{"Thickness", "[", "0.01", "]"}]}], "}"}]}], ",", 
+          RowBox[{"GridLines", " ", "\[Rule]", " ", "Automatic"}], ",", " ", 
+          RowBox[{"GridLinesStyle", " ", "\[Rule]", " ", 
+           RowBox[{"Directive", "[", "Dashed", "]"}]}], ",", " ", 
+          RowBox[{"AspectRatio", " ", "\[Rule]", " ", "1"}]}], " ", "]"}]}],
+       FontFamily->"Courier New",
+       FontColor->GrayLevel[0]]}], 
+     StyleBox["\[IndentingNewLine]",
+      FontFamily->"Courier New",
+      FontColor->GrayLevel[0]], 
+     StyleBox["]",
+      FontFamily->"Courier New",
+      FontColor->GrayLevel[0]]}]}], 
+   StyleBox[";",
+    FontFamily->"Courier New",
+    FontColor->GrayLevel[0]]}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"flightPhase", "[", "]"}], " ", ":=", "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", " ", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
       RowBox[{
-       StyleBox["{",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       RowBox[{
-        StyleBox[
-         RowBox[{"x", "[", "end", "]"}],
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
+       RowBox[{"start", " ", "=", " ", "0"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"initFlight", "=", 
         RowBox[{
-         StyleBox["l",
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox["theta",
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox["phi",
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         RowBox[{"x", "'"}], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox[
-          RowBox[{"l", "'"}],
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox[
-          RowBox[{"theta", "'"}],
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox[
-          RowBox[{"phi", "'"}],
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}]}], "}"}], " ", "/.", 
-      " ", "solFlight"}], "]"}]}], "\[IndentingNewLine]", 
-   RowBox[{"ParametricPlot", "[", 
-    StyleBox[
-     RowBox[{
-      RowBox[{"Evaluate", "[", 
-       RowBox[{
+         RowBox[{"{", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"x", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",", 
+           " ", 
+           RowBox[{
+            RowBox[{"y", "[", "0", "]"}], " ", "\[Equal]", " ", "1"}], ",", 
+           " ", 
+           RowBox[{
+            RowBox[{"l", "[", "0", "]"}], " ", "\[Equal]", " ", "l0"}], ",", 
+           " ", 
+           RowBox[{
+            RowBox[{"theta", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], 
+           ",", " ", 
+           RowBox[{
+            RowBox[{"phi", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",", 
+           " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"x", "'"}], "[", "0", "]"}], "\[Equal]", " ", "1"}], ",",
+            " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"y", "'"}], "[", "0", "]"}], "\[Equal]", " ", "0"}], ",",
+            " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"l", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", "0"}],
+            ",", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"theta", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
+            "1"}], ",", " ", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"phi", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
+            "0"}]}], "}"}], " ", "/.", " ", "values"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"solveForFlight", " ", "=", " ", 
         RowBox[{"{", 
          RowBox[{
-          RowBox[{"x", "[", "t", "]"}], ",", " ", 
-          RowBox[{"y", "[", "t", "]"}]}], "}"}], " ", "/.", " ", 
-        "solFlight"}], "]"}], ",", " ", 
-      RowBox[{"{", 
-       RowBox[{"t", ",", " ", "start", ",", " ", "end"}], "}"}], ",", " ", 
-      RowBox[{"AxesLabel", " ", "\[Rule]", " ", 
-       RowBox[{"{", 
-        RowBox[{"x", ",", " ", "y"}], "}"}]}], ",", " ", 
-      RowBox[{"LabelStyle", " ", "\[Rule]", " ", 
-       RowBox[{"Directive", "[", 
-        RowBox[{"Black", ",", " ", "Bold"}], "]"}]}], ",", " ", 
-      RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
-       RowBox[{"{", 
-        RowBox[{"Blue", ",", " ", 
-         RowBox[{"Thickness", "[", "0.01", "]"}]}], "}"}]}], ",", 
-      RowBox[{"GridLines", " ", "\[Rule]", " ", "Automatic"}], ",", " ", 
-      RowBox[{"GridLinesStyle", " ", "\[Rule]", " ", 
-       RowBox[{"Directive", "[", "Dashed", "]"}]}], ",", " ", 
-      RowBox[{"AspectRatio", " ", "\[Rule]", " ", "1"}]}],
-     FontFamily->"Courier New",
-     FontColor->GrayLevel[0]], 
-    StyleBox[" ",
+         "x", ",", " ", "y", ",", " ", "l", ",", " ", "theta", ",", " ", 
+          "phi"}], "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"solFlight", " ", "=", " ", 
+        RowBox[{"First", "[", 
+         RowBox[{"NDSolve", "[", 
+          RowBox[{
+           RowBox[{"Join", "[", 
+            RowBox[{"eqFlight", ",", " ", "initFlight"}], "]"}], ",", " ", 
+           "solveForFlight", ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", " ", "0", ",", " ", "1"}], "}"}]}], "]"}], 
+         "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"ParametricPlot", "[", 
+        RowBox[{
+         RowBox[{"Evaluate", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"x", "[", "t", "]"}], " ", "/.", " ", "solFlight"}], ",",
+             " ", 
+            RowBox[{
+             RowBox[{"y", "[", "t", "]"}], " ", "/.", " ", "solFlight"}]}], 
+           "}"}], "]"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"t", ",", " ", "0", ",", " ", "1"}], "}"}], ",", " ", 
+         RowBox[{"AxesLabel", " ", "\[Rule]", " ", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", " ", "y"}], "}"}]}], ",", " ", 
+         RowBox[{"LabelStyle", " ", "\[Rule]", " ", 
+          RowBox[{"Directive", "[", 
+           RowBox[{"Black", ",", " ", "Bold"}], "]"}]}], ",", " ", 
+         RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+          RowBox[{"{", 
+           RowBox[{"Blue", ",", " ", 
+            RowBox[{"Thickness", "[", "0.01", "]"}]}], "}"}]}], ",", 
+         RowBox[{"GridLines", " ", "\[Rule]", " ", "Automatic"}], ",", " ", 
+         RowBox[{"GridLinesStyle", " ", "\[Rule]", " ", 
+          RowBox[{"Directive", "[", "Dashed", "]"}]}], ",", " ", 
+         RowBox[{"AspectRatio", " ", "\[Rule]", " ", "1"}]}], " ", "]"}]}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"stancePhase", "[", "]"}], " ", ":=", "\[IndentingNewLine]", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", 
+     StyleBox["\[IndentingNewLine]",
+      FontFamily->"Courier New",
+      FontColor->GrayLevel[0]], 
+     StyleBox[
+      RowBox[{
+       RowBox[{"start", " ", "=", " ", "0"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"initStance", "=", 
+        RowBox[{"{", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"x", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",", 
+          " ", 
+          RowBox[{
+           RowBox[{"l", "[", "0", "]"}], " ", "\[Equal]", " ", "1"}], ",", 
+          " ", 
+          RowBox[{
+           RowBox[{"theta", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",",
+           " ", 
+          RowBox[{
+           RowBox[{"phi", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",", 
+          " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"x", "'"}], "[", "0", "]"}], "\[Equal]", " ", "1"}], ",", 
+          " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"l", "'"}], "[", "0", "]"}], "\[Equal]", " ", "0"}], ",", 
+          " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"theta", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
+           "1"}], ",", " ", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"phi", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
+           "0"}]}], "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"solveForStance", " ", "=", " ", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", " ", "l", ",", " ", "theta", ",", " ", "phi"}], 
+         "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"solStance", " ", "=", " ", 
+        RowBox[{"First", "[", 
+         RowBox[{"NDSolve", "[", 
+          RowBox[{
+           RowBox[{"Join", "[", 
+            RowBox[{"eqStance", ",", " ", "initStance"}], "]"}], ",", " ", 
+           "solveForStance", ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", " ", "0", ",", " ", "1"}], "}"}], ",", " ", 
+           RowBox[{"Method", " ", "\[Rule]", " ", 
+            RowBox[{"{", 
+             RowBox[{"\"\<EventLocator\>\"", ",", " ", 
+              RowBox[{
+               RowBox[{"\"\<Event\>\"", " ", "\[Rule]", " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"l", "[", "t", "]"}], " ", "-", " ", "l0"}], 
+                 ")"}]}], " ", "/.", " ", "values"}], ",", " ", 
+              RowBox[{"\"\<EventAction\>\"", " ", ":>", " ", 
+               RowBox[{"Throw", "[", 
+                RowBox[{
+                 RowBox[{"end", " ", "=", " ", "t"}], ",", " ", 
+                 "\"\<StopIntegration\>\""}], "]"}]}]}], "}"}]}]}], "]"}], 
+         "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+       RowBox[{"ParametricPlot", "[", 
+        RowBox[{
+         RowBox[{"Evaluate", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"x", "[", "t", "]"}], " ", "/.", " ", "solStance"}], ",",
+             " ", 
+            RowBox[{
+             RowBox[{"y", "[", "t", "]"}], " ", "/.", " ", "solStance"}]}], 
+           "}"}], "]"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"t", ",", " ", "0", ",", " ", "end"}], "}"}], ",", " ", 
+         RowBox[{"AxesLabel", " ", "\[Rule]", " ", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", " ", "y"}], "}"}]}], ",", " ", 
+         RowBox[{"LabelStyle", " ", "\[Rule]", " ", 
+          RowBox[{"Directive", "[", 
+           RowBox[{"Black", ",", " ", "Bold"}], "]"}]}], ",", " ", 
+         RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
+          RowBox[{"{", 
+           RowBox[{"Blue", ",", " ", 
+            RowBox[{"Thickness", "[", "0.01", "]"}]}], "}"}]}], ",", 
+         RowBox[{"GridLines", " ", "\[Rule]", " ", "Automatic"}], ",", " ", 
+         RowBox[{"GridLinesStyle", " ", "\[Rule]", " ", 
+          RowBox[{"Directive", "[", "Dashed", "]"}]}], ",", " ", 
+         RowBox[{"AspectRatio", " ", "\[Rule]", " ", "1"}]}], " ", "]"}]}],
+      FontFamily->"Courier New",
+      FontColor->GrayLevel[0]]}], 
+    StyleBox["\[IndentingNewLine]",
      FontFamily->"Courier New",
      FontColor->GrayLevel[0]], 
     StyleBox["]",
      FontFamily->"Courier New",
-     FontColor->GrayLevel[0]]}], "\n"}]}]], "Input",
+     FontColor->GrayLevel[0]]}]}], 
+  StyleBox[";",
+   FontFamily->"Courier New",
+   FontColor->GrayLevel[0]]}]}], "Input",
  CellChangeTimes->{{3.4753842219676*^9, 3.4753842260656*^9}, 
    3.4754092106085997`*^9, 3.4754137105916*^9, 3.4768329959484*^9, {
    3.4768332159964*^9, 3.4768332399764*^9}, 3.4768332781594*^9, {
@@ -1124,512 +1177,105 @@ Cell[BoxData[
    3.4771956539268*^9}, {3.4771957123338003`*^9, 3.4771957125638*^9}, {
    3.4771959063747997`*^9, 3.4771959079688*^9}, {3.4771959558778*^9, 
    3.4771961534298*^9}, 3.4771967114678*^9, {3.4771967676647997`*^9, 
-   3.4771969749088*^9}}],
+   3.4771969749088*^9}, {3.4777926652044497`*^9, 3.47779272488195*^9}, {
+   3.47779275606945*^9, 3.47779284008445*^9}, {3.47791067854845*^9, 
+   3.47791079652645*^9}, {3.47791083764445*^9, 3.47791092829945*^9}, {
+   3.4779110294144497`*^9, 3.4779110327634497`*^9}, {3.47791106403645*^9, 
+   3.47791108812745*^9}, {3.47791112748345*^9, 3.47791113012745*^9}, {
+   3.4779111862894497`*^9, 3.47791118712245*^9}, {3.4779112740914497`*^9, 
+   3.4779113010324497`*^9}, {3.47791133197945*^9, 3.47791134781345*^9}, {
+   3.47791165561345*^9, 3.4779116988404503`*^9}, {3.47791174760745*^9, 
+   3.4779117478814497`*^9}, {3.4779119198144503`*^9, 
+   3.4779119211904497`*^9}, {3.47791197512845*^9, 3.47791198869345*^9}, {
+   3.47791209295545*^9, 3.4779121071314497`*^9}, {3.47791235341645*^9, 
+   3.47791238081345*^9}, {3.47791243896745*^9, 3.47791254313345*^9}, {
+   3.4779125844474497`*^9, 3.47791258593845*^9}, {3.47791555941545*^9, 
+   3.4779155602814503`*^9}, 3.47791738948945*^9}],
 
 Cell[BoxData[
- RowBox[{"{", 
+ RowBox[{"\[IndentingNewLine]", 
   RowBox[{
-  "0.3101777846473042`", ",", "0.29072579622949796`", ",", 
-   "0.48791418281017335`", ",", "0.09309495129289404`", ",", 
-   "0.4739764429585878`", ",", "0.1996022506737959`", ",", 
-   RowBox[{"-", "1.4927944219365294`"}], ",", "0.49279442193652817`"}], 
-  "}"}]], "Output",
- CellChangeTimes->{{3.4771959994337997`*^9, 3.4771960304388*^9}, {
-   3.4771960932458*^9, 3.4771961037208*^9}, 3.4771961741988*^9, 
-   3.4771966973458*^9, {3.4771969398968*^9, 3.4771969769308*^9}}],
-
-Cell[BoxData[
- GraphicsBox[{{}, {}, 
-   {RGBColor[0, 0, 1], Thickness[0.01], LineBox[CompressedData["
-1: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
-9X49dy5Blo3WwNhHCklC8kKuliX4LyeTPIU=
-     "]]}},
-  AspectRatio->1,
-  Axes->True,
-  AxesLabel->{
-    FormBox["x", TraditionalForm], 
-    FormBox["y", TraditionalForm]},
-  AxesOrigin->{0, 0.2},
-  GridLines->Automatic,
-  GridLinesStyle->Directive[
-    Dashing[{Small, Small}]],
-  LabelStyle->Directive[
-    GrayLevel[0], Bold],
-  PlotRange->{{-3.738856368739685*^-22, 0.3101777846473042}, {
-   0.14344621364226842`, 1.}},
-  PlotRangeClipping->True,
-  PlotRangePadding->{
-    Scaled[0.02], 
-    Scaled[0.02]}]], "Output",
- CellChangeTimes->{{3.4771959994337997`*^9, 3.4771960304388*^9}, {
-   3.4771960932458*^9, 3.4771961037208*^9}, 3.4771961741988*^9, 
-   3.4771966973458*^9, {3.4771969398968*^9, 3.4771969769648*^9}}]
-}, Open  ]],
-
-Cell[CellGroupData[{
+   RowBox[{"**", " ", "Init"}], " ", "\[Rule]", " ", 
+   RowBox[{"Spring1", " ", "\[Rule]", " ", 
+    RowBox[{"Flight", 
+     StyleBox[" ",
+      FontSize->14,
+      FontColor->RGBColor[1, 0, 0]], 
+     StyleBox["\[Rule]",
+      FontSize->14,
+      FontColor->RGBColor[1, 0, 0]], " ", 
+     RowBox[{"Spring2", " ", "\[Rule]", " ", 
+      RowBox[{"Impulse_touchdown", " ", "\[Rule]", " ", 
+       RowBox[{
+       "Stance", " ", "\[Rule]", " ", "Impulse_hit", 
+        " "}]}]}]}]}]}]}]], "Input",
+ CellChangeTimes->{{3.4779160865434504`*^9, 3.47791620022745*^9}, {
+  3.47791743588745*^9, 3.47791751533745*^9}, {3.47791758038245*^9, 
+  3.47791760075345*^9}, {3.47791763430145*^9, 3.47791763813245*^9}, {
+  3.47791775669645*^9, 3.47791779437645*^9}, {3.47791788210345*^9, 
+  3.47791791459545*^9}, {3.47791844061445*^9, 3.47791846882845*^9}, {
+  3.47791852985045*^9, 3.4779185413734503`*^9}},
+ EmphasizeSyntaxErrors->True],
 
 Cell[BoxData[
  RowBox[{
-  StyleBox["\[IndentingNewLine]",
-   FontFamily->"Courier New",
-   FontColor->GrayLevel[0]], 
   RowBox[{
-   StyleBox[
-    RowBox[{
-     RowBox[{"start", " ", "=", " ", "0"}], ";"}],
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], "\[IndentingNewLine]", 
-   StyleBox[
-    RowBox[{
-     RowBox[{"end", " ", "=", " ", "0.07"}], ";"}],
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{"initStance", 
-     StyleBox[" ",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox["=",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox[" ",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox[
+    RowBox[{"oneHop", "[", 
+     RowBox[{"vHoriz_", ",", " ", "thetaLiftOff_"}], "]"}], " ", ":=", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"{", "}"}], "\[IndentingNewLine]", "initTotal"}], "=", 
       RowBox[{"{", " ", 
        RowBox[{
         RowBox[{
          RowBox[{"x", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",", " ", 
         RowBox[{
-         RowBox[{"l", "[", "0", "]"}], " ", "\[Equal]", " ", "0.3"}], ",", 
-        " ", 
+         RowBox[{
+          RowBox[{"y", "[", "0", "]"}], " ", "\[Equal]", "  ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"len", " ", "-", " ", "lmax", " ", "-", " ", 
+              RowBox[{"d", " ", 
+               RowBox[{"Sin", "[", "thetaLiftOff", "]"}]}]}], ")"}], " ", 
+            RowBox[{"Cos", "[", "thetaLiftOff", "]"}]}], ")"}]}], " ", "/.", 
+         " ", "values"}], ",", " ", 
         RowBox[{
-         RowBox[{"theta", "[", "0", "]"}], " ", "\[Equal]", "  ", 
-         "thetaEnd"}], ",", " ", 
+         RowBox[{"theta", "[", "0", "]"}], " ", "\[Equal]", " ", 
+         "thetaLiftOff"}], ",", " ", 
         RowBox[{
          RowBox[{"phi", "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], ",", 
         " ", 
         RowBox[{
          RowBox[{
-          RowBox[{"x", "'"}], "[", "0", "]"}], "\[Equal]", " ", "1"}], ",", 
-        " ", 
-        RowBox[{
-         RowBox[{
-          RowBox[{"l", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", "0"}], 
+          RowBox[{"x", "'"}], "[", "0", "]"}], "\[Equal]", " ", "vHoriz"}], 
         ",", " ", 
         RowBox[{
          RowBox[{
+          RowBox[{"y", "'"}], "[", "0", "]"}], "\[Equal]", " ", "0"}], ",", 
+        " ", 
+        RowBox[{
+         RowBox[{
           RowBox[{"theta", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
-         "thetadotEnd"}], ",", " ", 
+         "1"}], ",", " ", 
         RowBox[{
          RowBox[{
           RowBox[{"phi", "'"}], "[", "0", "]"}], " ", "\[Equal]", " ", 
-         "0"}]}], "}"}],
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]]}], 
-    StyleBox[";",
-     FontFamily->"Courier New",
-     FontColor->GrayLevel[0]]}], "\[IndentingNewLine]", 
-   StyleBox[
-    RowBox[{
-     RowBox[{"solveForStance", " ", "=", " ", 
-      RowBox[{"{", 
-       RowBox[{"x", ",", " ", "l", ",", " ", "theta", ",", " ", "phi"}], 
-       "}"}]}], ";"}],
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], 
-   StyleBox["\[IndentingNewLine]",
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], 
-   StyleBox["\[IndentingNewLine]",
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], 
-   RowBox[{
-    RowBox[{
-     StyleBox[
-      RowBox[{"tempY", "[", "t_", "]"}],
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox[" ",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox["=",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox[" ",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     RowBox[{"(", 
-      RowBox[{
-       RowBox[{
-        RowBox[{"(", 
-         RowBox[{"len", " ", "-", " ", 
-          RowBox[{"l", "[", "t", "]"}], " ", "-", " ", 
-          RowBox[{"d", " ", 
-           RowBox[{"Sin", "[", 
-            RowBox[{"theta", "[", "t", "]"}], "]"}]}]}], ")"}], " ", 
-        RowBox[{"Cos", "[", 
-         RowBox[{"theta", "[", "t", "]"}], "]"}]}], " ", "/.", " ", 
-       "values"}], ")"}]}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{
-     RowBox[{"tempYdot", "[", "t_", "]"}], " ", "=", " ", 
-     RowBox[{"D", "[", 
-      RowBox[{
-       RowBox[{"tempY", "[", "t", "]"}], ",", " ", "t"}], "]"}]}], ";"}], 
-   "\[IndentingNewLine]", "\[IndentingNewLine]", 
-   StyleBox[
-    RowBox[{
-     RowBox[{"solStance", " ", "=", " ", 
-      RowBox[{"First", "[", 
-       RowBox[{"NDSolve", "[", 
-        RowBox[{
-         RowBox[{"Join", "[", 
-          RowBox[{"eqStance", ",", " ", "initStance"}], "]"}], ",", " ", 
-         "solveForStance", ",", " ", 
-         RowBox[{"{", 
-          RowBox[{"t", ",", " ", "0", ",", " ", "end"}], "}"}]}], "]"}], 
-       "]"}]}], ";"}],
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], "\[IndentingNewLine]", 
-   RowBox[{"endStance", " ", "=", 
-    StyleBox[
-     RowBox[{" ", 
-      StyleBox[" ",
-       FontFamily->"Courier New",
-       FontColor->GrayLevel[0]]}]], 
-    RowBox[{
-     StyleBox["Evaluate",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     StyleBox["[",
-      FontFamily->"Courier New",
-      FontColor->GrayLevel[0]], 
-     RowBox[{
-      RowBox[{
-       StyleBox["{",
-        FontFamily->"Courier New",
-        FontColor->GrayLevel[0]], 
-       RowBox[{
-        StyleBox[
-         RowBox[{"x", "[", "end", "]"}],
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[
-         RowBox[{"tempY", "[", "end", "]"}],
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], ",", " ", 
-        RowBox[{
-         StyleBox["l",
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox["theta",
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox["phi",
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         RowBox[{"x", "'"}], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[
-         RowBox[{"tempYdot", "[", "end", "]"}],
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox[
-          RowBox[{"l", "'"}],
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox[
-          RowBox[{"theta", "'"}],
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}], 
-        StyleBox[",",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        StyleBox[" ",
-         FontFamily->"Courier New",
-         FontColor->GrayLevel[0]], 
-        RowBox[{
-         StyleBox[
-          RowBox[{"phi", "'"}],
-          FontFamily->"Courier New",
-          FontColor->GrayLevel[0]], "[", "end", "]"}]}], "}"}], " ", "/.", 
-      " ", "solStance"}], "]"}]}], 
-   StyleBox["\[IndentingNewLine]",
-    FontFamily->"Courier New",
-    FontColor->GrayLevel[0]], 
-   RowBox[{"ParametricPlot", "[", 
-    StyleBox[
-     RowBox[{
-      RowBox[{"Evaluate", "[", 
-       RowBox[{"{", 
-        RowBox[{
-         RowBox[{
-          RowBox[{"(", 
-           RowBox[{"x", "[", "t", "]"}], ")"}], "/.", "solStance"}], ",", " ", 
-         RowBox[{
-          RowBox[{"tempY", "[", "t", "]"}], " ", "/.", " ", "solStance"}]}], 
-        "}"}], "]"}], ",", " ", 
-      RowBox[{"{", 
-       RowBox[{"t", ",", " ", "start", ",", " ", "end"}], "}"}], ",", " ", 
-      RowBox[{"AxesLabel", " ", "\[Rule]", " ", 
-       RowBox[{"{", 
-        RowBox[{"x", ",", " ", "y"}], "}"}]}], ",", " ", 
-      RowBox[{"LabelStyle", " ", "\[Rule]", " ", 
-       RowBox[{"Directive", "[", 
-        RowBox[{"Black", ",", " ", "Bold"}], "]"}]}], ",", " ", 
-      RowBox[{"PlotStyle", " ", "\[Rule]", " ", 
-       RowBox[{"{", 
-        RowBox[{"Blue", ",", " ", 
-         RowBox[{"Thickness", "[", "0.01", "]"}]}], "}"}]}], ",", 
-      RowBox[{"GridLines", " ", "\[Rule]", " ", "Automatic"}], ",", " ", 
-      RowBox[{"GridLinesStyle", " ", "\[Rule]", " ", 
-       RowBox[{"Directive", "[", "Dashed", "]"}]}], ",", " ", 
-      RowBox[{"AspectRatio", " ", "\[Rule]", " ", "1"}]}],
-     FontFamily->"Courier New",
-     FontColor->GrayLevel[0]], 
-    StyleBox[" ",
-     FontFamily->"Courier New",
-     FontColor->GrayLevel[0]], 
-    StyleBox["]",
-     FontFamily->"Courier New",
-     FontColor->GrayLevel[0]]}], "\[IndentingNewLine]"}]}]], "Input",
- CellChangeTimes->{{3.4771943202788*^9, 3.4771945004217997`*^9}, {
-  3.4771947050438004`*^9, 3.4771947457548*^9}, {3.4771948133478003`*^9, 
-  3.4771948321717997`*^9}, {3.4771949013677998`*^9, 3.4771949525488*^9}, {
-  3.4771958257368*^9, 3.4771958314498*^9}, {3.4771961133658*^9, 
-  3.4771961171868*^9}, {3.4771961596938*^9, 3.4771961688978*^9}, {
-  3.4771965934628*^9, 3.4771966339458*^9}, {3.4771969909318*^9, 
-  3.4771972255478*^9}, {3.4771977042138*^9, 3.4771977135318003`*^9}}],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-  "0.0658855885645204`", ",", "0.1350014180083545`", ",", 
-   "0.31664564188564814`", ",", "0.3858840279162523`", ",", 
-   RowBox[{"-", "0.002465454641635858`"}], ",", "0.8807689457103081`", ",", 
-   RowBox[{"-", "0.21216147190856544`"}], ",", "0.44207797868249343`", ",", 
-   RowBox[{"-", "1.4032620924516328`"}], ",", 
-   RowBox[{"-", "0.08953232948489638`"}]}], "}"}]], "Output",
- CellChangeTimes->{{3.4771961719898*^9, 3.4771961763378*^9}, {
-   3.4771965951468*^9, 3.4771966343388*^9}, 3.4771966989828*^9, {
-   3.4771971508268003`*^9, 3.4771971876628*^9}, 3.4771972281068*^9, {
-   3.4771977085018*^9, 3.4771977150578003`*^9}}],
-
-Cell[BoxData[
- GraphicsBox[{{}, {}, 
-   {RGBColor[0, 0, 1], Thickness[0.01], LineBox[CompressedData["
-1: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
-bho=
-     "]]}},
-  AspectRatio->1,
-  Axes->True,
-  AxesLabel->{
-    FormBox["x", TraditionalForm], 
-    FormBox["y", TraditionalForm]},
-  AxesOrigin->{0, 0.135},
-  GridLines->Automatic,
-  GridLinesStyle->Directive[
-    Dashing[{Small, Small}]],
-  LabelStyle->Directive[
-    GrayLevel[0], Bold],
-  PlotRange->{{-3.015073332755786*^-22, 0.0658855885645204}, {
-   0.13500141800835452`, 0.13899190035596332`}},
-  PlotRangeClipping->True,
-  PlotRangePadding->{
-    Scaled[0.02], 
-    Scaled[0.02]}]], "Output",
- CellChangeTimes->{{3.4771961719898*^9, 3.4771961763378*^9}, {
-   3.4771965951468*^9, 3.4771966343388*^9}, 3.4771966989828*^9, {
-   3.4771971508268003`*^9, 3.4771971876628*^9}, 3.4771972281068*^9, {
-   3.4771977085018*^9, 3.4771977150778*^9}}]
-}, Open  ]]
+         "0"}]}], "}"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     "]"}]}], ";"}], "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.4779160865434504`*^9, 3.47791620022745*^9}, {
+  3.47791743588745*^9, 3.47791751533745*^9}, {3.47791758038245*^9, 
+  3.4779175979074497`*^9}, {3.4779176990584497`*^9, 3.4779177120244503`*^9}, {
+  3.47791780171145*^9, 3.4779178175064497`*^9}, {3.4779178673154497`*^9, 
+  3.47791786950845*^9}, {3.4779182268744497`*^9, 3.47791823111045*^9}, {
+  3.47791865143745*^9, 3.47791873814345*^9}, {3.47791882061845*^9, 
+  3.4779188382014503`*^9}, {3.47791899969945*^9, 3.4779190302414503`*^9}}]
 },
-WindowSize->{1136, 729},
-WindowMargins->{{3, Automatic}, {Automatic, -15}},
+WindowSize->{1045, 613},
+WindowMargins->{{3, Automatic}, {54, Automatic}},
 PrintingCopies->1,
 PrintingPageRange->{Automatic, Automatic},
 Magnification->1.0000001192092896`,
@@ -1647,17 +1293,10 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[545, 20, 22591, 672, 1172, "Input"],
-Cell[CellGroupData[{
-Cell[23161, 696, 15382, 430, 272, "Input"],
-Cell[38546, 1128, 512, 10, 30, "Output"],
-Cell[39061, 1140, 4113, 78, 371, "Output"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[43211, 1223, 9424, 278, 332, "Input"],
-Cell[52638, 1503, 670, 12, 30, "Output"],
-Cell[53311, 1517, 6038, 110, 368, "Output"]
-}, Open  ]]
+Cell[545, 20, 23240, 686, 1152, "Input"],
+Cell[23788, 708, 21334, 484, 1052, "Input"],
+Cell[45125, 1194, 976, 23, 52, "Input"],
+Cell[46104, 1219, 2261, 55, 152, "Input"]
 }
 ]
 *)
