@@ -27,27 +27,63 @@ Piecewise[{{0, l[t] <= (l0 - epsilon)},{ extendAccel, l0 <= l[t] <= ((lmax + l0)
 
 eqConstraintPhi = phi -> Function[t, 0];
 flagPhi = 0;
-(* Good Gains :- 900K, 10K, 50K *)
-Kp = 9000000.0;
+(* Good Gains :- 1000K, 10K, 50K *)
+Kp = 10000000.0;
 Ki = 50000;
 Kd = 10000;
 iErr = 0;
 iErrMax = 1;
 toSendUPhi = 0;
-oldToSendUPhi = 0;
-uPhi[t_, flagSol_] := Module[{sol, t1},
-
-    If[flagSol == 1, sol = solStanceG, Indeterminate];
-    If[flagSol == 2, sol = solFlightG, Indeterminate];
-    If[flagSol == 3, sol = solSpringG, Indeterminate];
-
-    t1 = First[theta /. sol][[1]][[-1]];
-    err = theta[t] - Evaluate[theta[t] /. sol];
-    derr = theta'[t] - Evaluate[theta'[t] /. sol];
-    iErr = err + iErr;
-    If[iErr >= iErrMax, iErr = 0, Indeterminate];
-    If[iErr <= -iErrMax, iErr = 0, Indeterminate];
-    toSendUPhi = Kp*err + Ki*iErr + Kd*derr;
+uPhi[t_, flagSol_] := Module[{sol, t1, t2, delT, err, derr, yDisp, thetaDisp, phiDDot},
+    
+    (* Stance control *)
+    If[flagSol == 1,
+        (*
+        thetaDisp = thetaLiftOffG - theta[t];
+        t1 = First[theta /. solStanceG][[1]][[-1]];
+        delT = t1 - t /. values;
+        Print[{"delT", delT}];
+        phiDDot = -2*Jb/Jw*(thetaDisp - theta'[t]*delT)/delT^2 /. values;
+        err = phi''[t] - phiDDot;
+        derr = 0;
+        iErr = err + iErr;
+        If[iErr >= iErrMax, iErr = iErrMax, Indeterminate];
+        If[iErr <= -iErrMax, iErr = -iErrMax, Indeterminate];
+        toSendUPhi = phiDDot + Kp*err + Ki*iErr + Kd*derr,
+        Indeterminate
+        *)
+         
+        sol = solStanceG;
+        t1 = First[theta /. sol][[1]][[-1]];
+        err = theta[t] - Evaluate[theta[t] /. sol];
+        derr = theta'[t] - Evaluate[theta'[t] /. sol];
+        iErr = err + iErr;
+        If[iErr >= iErrMax, iErr = iErrMax, Indeterminate];
+        If[iErr <= -iErrMax, iErr = -iErrMax, Indeterminate];
+        toSendUPhi = Kp*err + Ki*iErr + Kd*derr,
+        Indeterminate
+        
+        ];
+    
+    (* Flight and Spring phase control *)
+    If[((flagSol == 2) || (flagSol == 3)),
+        yDisp = yAtImpact - y[t];
+        tForImpact = time /. Solve[yDisp == y'[t]*time - 1/2 g time^2 /. values, time];
+        thetaDisp = thetaImpactG - theta[t];
+        phiDDot = -2*Jb/Jw*(thetaDisp - theta'[t]*tForImpact)/tForImpact^2 /. values;
+        (*
+        err = phi''[t] - phiDDot;
+        derr = 0;
+        iErr = err + iErr;
+        If[iErr >= iErrMax, iErr = iErrMax, Indeterminate];
+        If[iErr <= -iErrMax, iErr = -iErrMax, Indeterminate];
+        toSendUPhi = phiDDot + Kp*err + Ki*iErr + Kd*derr,
+        *)
+        toSendUPhi = phiDDot,
+        Indeterminate
+        ];
+    
+ 
     toSendUPhi
 ];
 
@@ -91,17 +127,20 @@ ParametricPlot[
 Evaluate[{x[t] /. solSpring, y[t] /. solSpring}], {t, 0, end}, 
 AxesLabel -> {x, y}, PlotStyle -> {Blue, Thickness[0.003]}, GridLines -> Automatic, 
 GridLinesStyle -> Directive[Dashed]];
+(*
+, PlotLegend -> {"x", "y", "theta"}, LegendPosition-> {0.9, -0.9}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed]
+*)
 
 If[flagPhi == 0,
     pSpringParams = 
-    Plot[Evaluate[{x[t], y[t], theta[t]} /. solSpring], {t, 0, end}, PlotLegend -> {x, y, theta},LegendPosition-> {0.8, -0.8},
-    PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed],
-    PlotLabel -> Spring Params, AxesOrigin-> {0, 0}],
+    Plot[Evaluate[{x[t], y[t], theta[t]} /. solSpring], {t, 0, end},
+    PlotStyle -> {Thickness[0.005]},
+    PlotLabel -> Spring Params, AxesOrigin-> {0, 0}, AxesLabel -> Automatic],
 
     pSpringParams = 
-    Plot[Evaluate[{x[t], y[t], theta[t], phi[t]} /. solSpring], {t, 0, end}, PlotLegend -> {x, y, theta, phi},
-    LegendPosition-> {0.8, -0.8}, PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic,
-    GridLinesStyle -> Directive[Dashed], PlotLabel -> Spring Params, AxesOrigin-> {0, 0}]
+    Plot[Evaluate[{x[t], y[t], theta[t], phi[t]} /. solSpring], {t, 0, end}, PlotLegend -> {"x", "y", "theta", "phi"},
+    LegendPosition-> {0.9, -0.9}, PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic,
+    GridLinesStyle -> Directive[Dashed], PlotLabel -> Spring Params, AxesOrigin-> {0, 0}, AxesLabel -> Automatic]
 ];
 
 If[flagPhi == 0,
@@ -158,14 +197,14 @@ GridLinesStyle -> Directive[Dashed]];
 
 If[flagPhi == 0,
     pFlightParams = 
-    Plot[Evaluate[{x[t], y[t], l[t], theta[t]} /. solFlight], {t, 0, end}, PlotLegend -> {x, y, l, theta},
-    LegendPosition-> {0.8, -0.8},PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed],
-    PlotLabel -> Flight Params, AxesOrigin-> {0, 0}],
+    Plot[Evaluate[{x[t], y[t], l[t], theta[t]} /. solFlight], {t, 0, end}, PlotLegend -> {"x", "y", "l", "theta"},
+    LegendPosition-> {0.9, -0.9},PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed],
+    PlotLabel -> Flight Params, AxesOrigin-> {0, 0}, AxesLabel -> Automatic],
 
     pFlightParams = 
-    Plot[Evaluate[{x[t], y[t], l[t], theta[t], phi[t]} /. solFlight], {t, 0, end}, PlotLegend -> {x, y, l, theta, phi},
-    LegendPosition-> {0.8, -0.8},PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed],
-    PlotLabel -> Flight Params, AxesOrigin-> {0, 0}]
+    Plot[Evaluate[{x[t], y[t], l[t], theta[t], phi[t]} /. solFlight], {t, 0, end}, PlotLegend -> {"x", "y", "l", "theta", "phi"},
+    LegendPosition-> {0.9, -0.9},PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed],
+    PlotLabel -> Flight Params, AxesOrigin-> {0, 0}, AxesLabel -> Automatic]
 ];
 
 If[flagPhi == 0,
@@ -231,17 +270,20 @@ pStance =
 ParametricPlot[Evaluate[{xFuncTemp[t], yFuncTemp[t]}/.solStance], {t, 0, end}, 
 AxesLabel -> {x, y}, PlotStyle -> {Red, Thickness[0.003]}, GridLines -> Automatic, 
 GridLinesStyle -> Directive[Dashed]];
-
+(*
+    PlotLegend -> {"l", "theta", "phi"}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed],LegendPosition-> {0.9, -0.9},
+     
+    *)
 If[flagPhi == 0, 
     pStanceParams = 
-    Plot[Evaluate[{xFuncTemp[t], yFuncTemp[t], l[t], theta[t]}/. solStance], {t, 0, end}, PlotLegend -> {x, y, l, theta},
-    LegendPosition-> {0.8, -0.8}, PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed],
-    PlotLabel -> StanceParams, AxesOrigin-> {0, 0}],
+    Plot[Evaluate[{xFuncTemp[t], yFuncTemp[t], l[t], theta[t]}/. solStance], {t, 0, end}, PlotLegend -> {"x", "y", "l", "theta"},
+    LegendPosition-> {0.9, -0.9}, PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed],
+    PlotLabel -> StanceParams, AxesOrigin-> {0, 0}, AxesLabel -> Automatic],
 
     pStanceParams = 
-    Plot[Evaluate[{xFuncTemp[t], yFuncTemp[t], l[t], theta[t], phi[t]}/. solStance], {t, 0, end}, PlotLegend -> {x, y, l, theta, phi},
-    LegendPosition-> {0.8, -0.8}, PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed],
-    PlotLabel -> StanceParams, AxesOrigin-> {0, 0}]
+    Plot[Evaluate[{l[t], theta[t], phi[t]}/. solStance], {t, 0, end},
+    PlotStyle -> {Thickness[0.005]},
+    PlotLabel -> StanceParams, AxesOrigin-> {0, 0}, AxesLabel -> Automatic]
 ];
 
 vnew = ((mw + mp)*Abs[l'[end]]/M ) /. values /. solStance;
@@ -268,7 +310,7 @@ toSend
 
 getGVals[] := Module[{},
 lmax = 0.4;
-init = {0, 0, 1, l0, 0, 0, 1, 0, 0, -0.5, 0} /. values;
+init = {0, 0, 1, l0, 0, 0, 1, 0, 0, -0.50, 0} /. values;
 flagPhi = 0;
 {op1, pFlight1, pFlightParams1, solFlight1} = flightPhase[init];
 {op2, pSpring1, pSpringParams1, solSpring1} = springPhase[op1];
@@ -280,35 +322,61 @@ flagPhi = 0;
 
 getGVals[];
 
-p = Show[pFlight1, pSpring1, pStanceG, pFlightG, pSpringG, PlotRange -> {{0, 4}, {0, 2}}];
-Export["plot.eps", p];
+(*
+p = Show[pFlight1, pSpring1, pStanceG, pFlightG, pSpringG, PlotRange -> {{0, 4.5}, {-0.5, 2.2}}];
+Export["plot.pdf", p];
+*)
+thetaImpactG = op2[[5]];
+thetaLiftOffG = op3[[5]];
+yAtImpact = (len - lmax) Cos[thetaImpactG] - d Sin[thetaImpactG] /. values;
+Print[{thetaImpactG, thetaLiftOffG, yAtImpact}];
 
 op2[[5]] = op2[[5]] + 0.01;
 flagPhi = 1;
 {op3, pStance1, pStanceParams1, solStance1} = stancePhase[op2];
-flagPhi = 0;
 {op4, pFlight2, pFlightParams2, solFlight2} = flightPhase[op3];
 {op5, pSpring2, pSpringParams2, solSpring2} = springPhase[op4];
+flagPhi = 0;
+p = Show[pFlight1, pSpring1, pStance1, pFlight2, pSpring2, PlotRange -> {{0, 4}, {0, 2}}];
+Export["plot.pdf", p];
 
-tend = First[theta /. solStanceG][[1]][[-1]];
+(*
+{op6, pStance2, pStanceParams2, solStance2} = stancePhase[op5];
+{op7, pFlight3, pFlightParams3, solFlight3} = flightPhase[op6];
+{op8, pSpring3, pSpringParams3, solSpring3} = springPhase[op7];
+flagPhi = 0;
+p = Show[pFlight1, pSpring1, pStance1, pFlight2, pSpring2, pStance2, pFlight3, pSpring3, PlotRange -> {{0, 6}, {-2, 2}}];
+Export["plot.eps", p];
+*)
+
+tendStance = First[theta /. solStanceG][[1]][[-1]];
 p1 = ParametricPlot[{Evaluate[{xFuncTemp[t], yFuncTemp[t]} /. solStanceG], Evaluate[{xFuncTemp[t], yFuncTemp[t]} /. solStance1]}
-, {t, 0, tend-0.01}, AxesLabel -> {x, y}, PlotStyle -> {Thickness[0.003]}, GridLines -> Automatic, 
+, {t, 0, tendStance}, AxesLabel -> {x, y}, PlotStyle -> {Thickness[0.003]}, GridLines -> Automatic, 
 GridLinesStyle -> Directive[Dashed]]; 
-Export["p1.eps", p1];
 
+tendFlight = First[x /. solFlightG][[1]][[-1]];
+p2 = ParametricPlot[{Evaluate[{x[t-tendStance], y[t-tendStance]} /. solFlightG], Evaluate[{x[t-tendStance], y[t-tendStance]}
+/. solFlight2]}, {t, tendStance, tendFlight+tendStance}, AxesLabel -> {x, y}, PlotStyle -> {Thickness[0.003]},
+GridLines -> Automatic, GridLinesStyle -> Directive[Dashed]]; 
 
-tend = First[x /. solFlightG][[1]][[-1]];
-p1 = ParametricPlot[{Evaluate[{x[t], y[t]} /. solFlightG], Evaluate[{x[t], y[t]} /. solFlight2]}
-, {t, 0, tend-0.1}, AxesLabel -> {x, y}, PlotStyle -> {Thickness[0.003]}, GridLines -> Automatic, 
-GridLinesStyle -> Directive[Dashed]]; 
-Export["p2.eps", p1];
+tendSpring = First[x /. solSpringG][[1]][[-1]];
+p3 = ParametricPlot[{Evaluate[{x[t-tendFlight-tendStance], y[t-tendFlight-tendStance]} /. solSpringG], Evaluate[{x[t-tendFlight-tendStance], y[t-tendFlight-tendStance]} /. solSpring2]}
+, {t, tendFlight + tendStance, tendStance + tendFlight + tendSpring}, AxesLabel -> {x, y}, PlotStyle -> {Thickness[0.003]},
+GridLines -> Automatic, GridLinesStyle -> Directive[Dashed]]; 
 
-tend = First[x /. solSpringG][[1]][[-1]];
-p1 = ParametricPlot[{Evaluate[{x[t], y[t]} /. solSpringG], Evaluate[{x[t], y[t]} /. solSpring2]}
-, {t, 0, tend-0.1}, AxesLabel -> {x, y}, PlotStyle -> {Thickness[0.003]}, GridLines -> Automatic, 
-GridLinesStyle -> Directive[Dashed]]; 
-Export["p3.eps", p1];
+p = Show[p1, p2, p3, PlotRange -> {{0, 3.5},{0,2.2}}]; 
+Export["p1.pdf", p];
 
 Exit[]
 
-
+(*
+        sol = solStanceG;
+        t1 = First[theta /. sol][[1]][[-1]];
+        err = theta[t] - Evaluate[theta[t] /. sol];
+        derr = theta'[t] - Evaluate[theta'[t] /. sol];
+        iErr = err + iErr;
+        If[iErr >= iErrMax, iErr = 0, Indeterminate];
+        If[iErr <= -iErrMax, iErr = 0, Indeterminate];
+        toSendUPhi = Kp*err + Ki*iErr + Kd*derr,
+        Indeterminate
+        *)

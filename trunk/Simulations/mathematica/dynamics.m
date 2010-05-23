@@ -1,14 +1,9 @@
 (* ::Package:: *)
-(*
-    Todo :
-            1. Find a nice stable gait
-            2. Implement phi control
-*)
 
 <<PlotLegends`
 SetOptions[Plot, DisplayFunction-> Identity];
 lmax = 0.4;
-values={M -> 4.7, mw -> 1.5, mp -> 2.5, ml -> 0.7, Jw -> 0.02, Jb -> 0.086, K -> 2500, l0 -> 0.2, h -> 0.3,
+values={M -> 4.7, mw -> 1.5, mp -> 2.5, ml -> 0.7, Jw -> 0.02, Jb -> 0.086, K -> 500, l0 -> 0.2, h -> 0.3,
 d -> 0.05, dw -> 0.2, g-> 9.8, len -> 0.5, hmax -> 1, extendAccel -> 15, epsilon -> 0.01};
 
 xl[t_]= x[t] + (d - (l[t]- h) Tan [theta[t]]) Cos [theta[t]];
@@ -19,27 +14,23 @@ yw[t_]= y[t] -(dw -d) Sin[theta[t]];
 
 xp[t_]= x[t] + d Cos[theta[t]];
 yp[t_]= y[t] + d Sin[theta[t]];
-
-
 T = 1/2 mw (xw'[t]^2 + yw'[t]^2) +  1/2 mp (xp'[t]^2 + yp'[t]^2) +  1/2 ml (xl'[t]^2 + yl'[t]^2) +
 1/2 Jw (phi'[t] + theta'[t])^2 + 1/2 Jb theta'[t]^2;
 V = g (ml yl[t] + mw yw[t] + mp yp[t]) + 1/2 K (l[t] - l0)^2;
 
 uL[t_] =
-Piecewise[{{0, l[t] <= (l0-epsilon)},{ extendAccel, l0 <= l[t] <= ((lmax + l0)/2 + epsilon)},
-{ -extendAccel, (lmax+l0)/2 < l[t] <= lmax}, {0, l[t] >  (lmax+epsilon)}} /. values];
+Piecewise[{{0, l[t] <= (l0 - epsilon)},{ extendAccel, l0 <= l[t] <= ((lmax + l0)/2 + epsilon)},
+{ -extendAccel, (lmax + l0)/2 < l[t] <= lmax}, {0, l[t] >  (lmax + epsilon)}} /. values];
 
 eqConstraintPhi = phi -> Function[t, 0];
 
 L = T - V;
-L = L /. eqConstraintPhi;
-eq1 = D[D[L, D[x[t], t]], t]== D[L, x[t]];
-eq2 = D[D[L, D[y[t], t]], t]== D[L, y[t]];
-eq3 = D[D[l[t], t],t] == uL[t];
-eq4 = D[D[L, D[theta[t], t]], t] == D[L, theta[t]];
+eq1 = D[D[L, D[x[t], t]], t]== D[L, x[t]] /. eqConstraintPhi;
+eq2 = D[D[L, D[y[t], t]], t]== D[L, y[t]] /. eqConstraintPhi;
+eq3 = D[D[l[t], t],t] == uL[t] /. eqConstraintPhi;
+eq4 = D[D[L, D[theta[t], t]], t] == D[L, theta[t]] /. eqConstraintPhi;
 eqFlight = {eq1, eq2, eq3, eq4};
 eqFlight = eqFlight /. values;
-
 
 (* Functions start here *)
 
@@ -52,12 +43,9 @@ theta'[0] == thetadot0};
 solveForSpring = {x, y, theta};
 
 eqConstraintSpring = l -> Function[t, len0];
-L = T - V;
-L = L /. eqConstraintSpring;
-L = L /. eqConstraintPhi;
-eq1 = D[D[L, D[x[t], t]], t] == D[L, x[t]];
-eq2 = D[D[L, D[y[t], t]], t] == D[L, y[t]];
-eq3 = D[D[L, D[theta[t], t]], t] == D[L, theta[t]];
+eq1 = D[D[L, D[x[t], t]], t] == D[L, x[t]] /. eqConstraintSpring /. eqConstraintPhi;
+eq2 = D[D[L, D[y[t], t]], t] == D[L, y[t]] /. eqConstraintSpring /. eqConstraintPhi;
+eq3 = D[D[L, D[theta[t], t]], t] == D[L, theta[t]] /. eqConstraintSpring /. eqConstraintPhi;
 eqSpring = {eq1, eq2, eq3};
 eqSpring = eqSpring /. values;
 
@@ -78,13 +66,10 @@ Plot[Evaluate[{x[t], y[t], theta[t]} /. solSpring], {t, 0, end}, PlotLegend -> {
 PlotStyle -> {Thickness[0.003]}, Gridlines -> Automatic, GridLinesStyle -> Directive[Dashed],
 PlotLabel -> Spring Params, AxesOrigin-> {0, 0}];
 
-
 {{end + t0, x[end], y[end], len0, theta[end], x'[end], 
 y'[end], 0, theta'[end]} /. values /. solSpring, 
 pSpring, pSpringParams}
 ];
-
-
 flightPhase[{t0_, x0_, y0_, len0_, theta0_, xdot0_, ydot0_, 
 lendot0_, thetadot0_}] :=
 Module[{pFlight, pFlightParams},
@@ -122,8 +107,6 @@ Module[{arm},
 arm = d Cos[theta0] + (len - len0 - d Tan[theta0]) Sin[theta0]  /. values;
 arm
 ];
-
-
 stancePhase[{t0_, x0_, y0_, len0_, theta0_, xdot0_, ydot0_, 
 lendot0_, thetadot0_}] :=
 
@@ -142,12 +125,8 @@ initStance = {(l[0] == len0) /. values, theta[0] == theta0, l'[0] == 0, theta'[0
 xfootOld = x0 + ((len - len0) Sin[theta0] + d Cos[theta0]) /. values;
 eqConstraintStanceY = y ->  Function[t, (len - l[t])*Cos[theta[t]] - d*Sin[theta[t]]];
 eqConstraintStanceX = x -> Function[t, xfootOld - ((len - l[t]) Sin[theta[t]] + d Cos[theta[t]])];
-L = T -V;
-L = L /. eqConstraintStanceX;
-L = L /. eqConstraintStanceY;
-L = L /. eqConstraintPhi;
-eq1 = D[D[L, D[l[t], t]], t] == D[L, l[t]];
-eq2 = D[D[L, D[theta[t], t]], t] == D[L, theta[t]];
+eq1 = D[D[L, D[l[t], t]], t] == D[L, l[t]] /. eqConstraintStanceX /. eqConstraintStanceY /. eqConstraintPhi;
+eq2 = D[D[L, D[theta[t], t]], t] == D[L, theta[t]] /. eqConstraintStanceX /. eqConstraintStanceY /. eqConstraintPhi;
 eqStance = {eq1, eq2};
 eqStance = eqStance /. values;
 
@@ -193,7 +172,6 @@ init = {0, 0, hTopMax, l0, thetaTop, vTopHoriz, 0, 0, thetaDotTop} /. values;
 
 {op1, p1Flight, p1FlightParams} = flightPhase[init];
 {op2, p1Spring, p1SpringParams} = springPhase[op1];
-pTotal = Show[p1Flight, p1Spring, PlotRange -> {{0, 2}, {0, 1.5}}];
 {op3, p1Stance, p1StanceParams} = stancePhase[op2];
 {op4, p2Flight, p2FlightParams} = flightPhase[op3];
 {op5, p2Spring, p2SpringParams} = springPhase[op4];
@@ -201,9 +179,10 @@ pTotal = Show[p1Flight, p1Spring, PlotRange -> {{0, 2}, {0, 1.5}}];
 {op7, p3Flight, p3FlightParams} = flightPhase[op6];
 {op8, p3Spring, p3SpringParams} = springPhase[op7];
 
-pTotal = Show[pTotal, p1Stance, p2Flight, p2Spring, p2Stance, p3Flight, p3Spring, PlotRange -> {{0, 2},{0, 1.5}}];
+pTotal = Show[p1Flight, p1Spring, p1Stance, p2Flight, p2Spring, p2Stance, p3Flight, p3Spring, PlotRange -> {{0, 4},{0, 2}}];
 norm = Sqrt[(op8[[3]]-op5[[3]])^2 + (op8[[5]]-op5[[5]])^2 + (op8[[6]]-op5[[6]])^2 +
 (op8[[7]]-op5[[7]])^2 + (op8[[9]]-op5[[9]])^2];
+Print["norm:", norm];
 
 Export["plot.eps", pTotal];
 norm
@@ -223,52 +202,73 @@ op3[[2]] = 0;
 op3
 ];
 
-lmax = 0.35;
-init = {0, 0, 1.1, l0, -0.06195, 3.0, 0, 0, 0.109413} /. values;
-{op1, p1Flight, p1FlightParams} = flightPhase[init];
-{op2, p1Spring, p1SpringParams} = springPhase[op1];
-Print[op2];
+cost[op1_List, op2_List] := Module[{},
+output = 0;
+For[i=3, i <= 9, i++, output = output + (op2[[i]] - op1[[i]])^2];
+Sqrt[output]
+];
+
+forOpti[th_Real, dth_Real, opStart_List] := Module[{op1},
+    opStart[[5]] = th;
+    opStart[[9]] = dth;
+    op1 = poincareMap[opStart];
+    c = cost[op1, opStart];
+    c
+];
+
+init = {0, 0, 1.0, l0, 0, 1.0, 0, 0, -0.5} /. values;
+{op1, pt1, pt2} = flightPhase[init];
+{op2, pt1, pt2} = springPhase[op1];
 op2[[1]] = 0;
 op2[[2]] = 0;
+
+op1 = poincareMap[op2];
+Print[op1];
+op2 = poincareMap[op1];
 Print[op2];
+Print[cost[op1, op2]];
+Print["Iterating near this value now..."];
 
-Print["Now do Poincare"];
-For[i=0, i<10, i++,
-op2 = poincareMap[op2];
-Print[op2];];
+th = op1[[5]];
+thMin = op1[[5]] - 0.01;
+dthMin = op1[[9]] - 0.01;
+thMax = op1[[5]] + 0.01;
+dthMax = op1[[9]] + 0.01;
 
-(*Print[oneBounce[3.0, 1.1, 0.35, -0.06195, 0.109413]];*)
-
-(*
-NMinimize[oneBounce[velHoriz, height, lengthMax, thetaTop, thetaDotTop], {{velHoriz, 2.8, 3}, {height, 1.0, 1.2},
-{lengthMax, 0.25, 0.35}, {thetaTop, -1, 1}, {thetaDotTop, -3, 3}}, Method -> "DifferentialEvolution",
-AccuracyGoal -> 1, PrecisionGoal -> 1, WorkingPrecision -> 2];
-
-NMinimize[oneBounce[velHoriz, height, lengthMax, thetaTop, thetaDotTop], {{thetaDotTop, -1, 1}},
-Method -> "DifferentialEvolution", AccuracyGoal -> 1, PrecisionGoal -> 1, WorkingPrecision -> 2];
-*)
-
-(*height = 1.1;
-velHoriz = 3.0;
-lengthMax = 0.35;
-thetaTop = -0.062;
-thetaDotTop = 0.10945;
-
-
-FindMinimum[oneBounce[velHoriz, height, lengthMax, thetaTop, thetaDotTop], {{height, 1.1}, {thetaTop, -0.0619}, {thetaDotTop, 0.10945}},
-Method -> "Automatic", AccuracyGoal -> 9, PrecisionGoal -> 8, WorkingPrecision -> 10,
-StepMonitor :> Print[PaddedForm[{height, thetaTop, thetaDotTop}, 10]]];
-
-NMinimize[oneBounce[velHoriz, height, lengthMax, thetaTop, thetaDotTop], {thetaTop, -0.062, -0.0619},
-Method -> "Automatic", AccuracyGoal -> 2, PrecisionGoal -> 1, StepMonitor :> Print[thetaTop]];
-*)
+For[dth=dthMin, dth<= dthMax, dth = dth + 0.001,
+    a = forOpti[th, dth, op1];
+    Print[{th, dth, a}];
+];
 
 (*
-minimum = 1000;
-count = 0;
-For[i=-0.062, i<= -0.05, i = i+0.001, For[j=0.09, j<=0.11, j=j+0.01, n = oneBounce[velHoriz, height, lengthMax, i, j];
-If[n<minimum, minimum = n; Print["n: ", n, " theta: ", i, " thetaDot: ", j]]; count++; Print[count]]];
+        NMinimize[forOpti[th, dth, op1], {{th, thMin, thMax}, {dth, dthMin, dthMax}}, Method -> "Automatic",
+StepMonitor -> Print[{th, dth}]];
 *)
+(*
+For[th = -0.09, th <= 0.1, th = th + 0.01,
+    For[dth = -0.09, dth <= 0.1, dth = dth + 0.01,
+        init = {0, 0, 1.0, l0, 0, 3.0, 0, 0, dth} /. values;
+        {op1, pt1, pt2} = flightPhase[init];
+        {op2, pt1, pt2} = springPhase[op1];
+        op2[[1]] = 0;
+        op2[[2]] = 0;
+
+        op = poincareMap[op2];
+        (*Print[op];*)
+        op1 = poincareMap[op];
+        (*Print[op1];*)
+        a = cost[];
+        OutputForm[Print["th=",0," dth=",dth,"cost=",a]];
+    ]
+];
+*)
+
 
 Exit[]
+
+
+
+
+
+
 
