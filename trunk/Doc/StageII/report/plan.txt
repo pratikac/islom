@@ -1,0 +1,34 @@
+Chap 1 Intro
+    Previous work -- Stage I
+    New goals
+
+Chap 2 Readings
+    input-state stability
+    optimal control
+    etc. etc.
+
+Chap 3 Design
+    Sims
+        pics + small section about simulations
+    Components
+        copy from Siraj + add H-bridge
+
+Chap 4 Hopping gait
+    Plan
+    Euler-Lagrange equations
+        Constraints
+        Event solvers
+    Gait
+        Initial conditions
+        Efforts with NMinimize
+        Poincare Map
+    Retraction control
+    Trajectory control
+
+Chap 5 Kalman Filter
+
+Chap 6 Yet to do..
+
+
+
+    
