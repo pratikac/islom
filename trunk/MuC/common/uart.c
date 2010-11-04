@@ -1,6 +1,3 @@
-#define BAUDRATE	38400
-#define BRGVAL		(((FCY/BAUDRATE)/16)-1)
-
 char rxChar;
 
 void TX(unsigned char data)
