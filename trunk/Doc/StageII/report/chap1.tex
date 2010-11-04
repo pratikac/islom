@@ -1,0 +1,93 @@
+\chapter{Introduction}
+\label{chap:intro}
+
+The motivation for research in legged robotics has been to understand human motion and legged motion in
+general. There are various applications that spring to mind when one thinks of the uses of legged robots 
+viz. travelling on difficult terrain, search and rescue operations in event of fires and landslides, space
+exploration etc. At the same time it fulfils the science fiction dream of having a running and jumping 
+robotic pet! Some of the major challenges in development of legged robots are, \cite{review}    
+\begin{enumerate}
+\item
+Stronger energy pumping mechanisms are needed to compensate the energy loss after impact with the ground. Heavier the robot, more
+energy is lost every impact which results in larger and even heavier actuators to compensate it.
+\item
+Dynamics of legged robots is significantly more complex than wheeled ones. Control strategies employed for 
+different actions like hopping and running are much different from conventional ones.
+\item
+Energy efficiency is a major concern due to multiplying effect of any extra weight added to the robot.
+\end{enumerate}
+
+\section{Previous Approaches}
+\subsection*{SLIP}
+Marc Raibert pioneered the field of legged robotics \cite{leglab, raibert_book}. He developed three pneumatically actuated one legged robots to demonstrate 3D hopping. There have been a variety of approaches towards building better actuators and stabilization strategies. We shall look at them briefly in the following sections. Sayyad, Seth and Seshu review the development of one legged robots in detail in this review paper \cite{review}.
+\begin{enumerate}
+ \item \textbf{Energy Pumping Mechanism (EPM)}\\
+Pneumatic actuators were seen in Raibert's \emph{Monopod} \cite{raibert_monopod} and Zeglin's \emph{Uniroo} \cite{zeglin}. It was observed that electro-mechanical actuators were much more efficient than pneumatic or hydraulic actuators. 
+ARL Monopods developed by Buehler \cite{ARLMono1, ARLMono2} that utilized a ball-screw mechanism to store
+energy in a leg spring and had significantly better energy characteristics. Zeglin's planar bow-legged hopper used a flexible bow shaped leg positioned using servomotors \cite{bowleg}. Almost all approaches after this have used springs to store energy and provide impact forces for liftoff; only major differences being whether they used springs in a telescopic leg or as a part of the joints in an articulate leg.
+ 
+  \item \textbf{Stability} \\
+  Raibert's hoppers used a pneumatically controlled actively balanced hip \cite{review, ARLMono1}. There was another approach wherein swinging arms were used as passive stabilizers. Note that such appendages do not provide a complete solution to the problem but just reduce the energy required for balancing. ARL Monopod II had a compliant hip-leg using a swinging leg \cite{Bue_PassRun, ARLMono2}.
+\end{enumerate}
+
+The above robot have impact forces passing through their C.G. to provide a stable system for single place hopping and are referred to as \emph{Springy Leg Inverted Pendulum} (SLIP). It is noted that SLIP
+does not account for the pitch stabilization problem which is of practical concern.
+
+\subsection*{SLOM}
+Shanmuganathan et. al. considered asymmetric configurations in which the CG location was offset 
+from the geometric center. This is referred to as a \emph{Springy-Legged Offset-Mass} (SLOM) hopper \cite{shanmug}. The impulsive torque acting during the stance gives a pitch up velocity in the flight phase. This compensates the net pitch down during the stance phase due to the horizontal velocity. Sayyad and Seth have analyzed this configuration using a 3D Poincar\'e map to obtain a periodic motion stabilized by observer based state feedback strategy \cite{sayyad}.
+
+\section{Stage I}
+The SLOM hopper was used as a test bed for devising hopping strategies by Saboo \cite{saboo}, Simit \cite{simit} and Siraj \cite{siraj}. However, it was an over-designed system with large energy losses due to impacts and friction. It was necessary to remove these flaws in the robot before further work could be done on it. Hence, it was decided to go ahead with a completely new mechanical design for the hopper keeping the following things in mind about the previous design.
+\begin{enumerate}
+\item
+Compression springs need an enclosure outside them to keep them in place when in compression. This results in frictional losses in every cycle of energy pumping. Tension springs on the other hand do not have such frictional losses associated with them.
+\item
+The SLOM hopper could not hop above a height of 10 cm. The energy pumping mechanism (EPM) was the limiting factor. For achieving heights larger than this, we need to significantly reduce the leg mass and have a more energy efficient EPM.
+\item
+A reaction wheel should be present on the hopper and this will be used to reorient the robot to demonstrate both in-place hopping
+and running capabilities.
+\end{enumerate}
+
+\subsection*{Work done}
+\begin{enumerate}
+ \item 
+Two mechanical designs that we formulated to try to obtain an efficient energy pumping mechanism for
+the one legged hopper robot. Both the designs had their share of flaws and it was not possible to go ahead with the fabrication without further analysis on any one of them.
+\item
+The sizing analysis for the various generic components of the hopper was done to arrive at approximate values of the rack and pinion dimensions, motor torques, electronic considerations, mehanical dimensions and forces.
+\item
+The next step was to re-run this analysis side by side with the fabrication unit to make a feasible design that can be manufactured easily as well as serves our purpose.
+\item
+The electronics for the hopper was re--designed. Older circuits can be used for preliminary experiments. Newer self-made motor drivers using MOSFETs were made to ensure a good enough drive to the motors. The IMU will be same as the one used by Siraj and Simit \cite{siraj, simit}. We think that just the pitch attitude is sufficient provided we constrain the robot properly in the other two axes. The micro-controller unit has been redesigned as the new system has 2 DC motors, 2 servo motors and an IMU.
+\end{enumerate}
+
+\section{Stage II}
+The goals of the second stage of the project were two-fold,
+\subsubsection*{Implementation}
+\begin{enumerate}
+ \item
+  Fabricate the robot, choose materials, feasible dimensions etc. The sizing analysis done in the first stage proved particularly helpful for re--analysing new designs.
+  \item
+  Design and fabricate electronic circuits for onboard computation and control.
+  \item
+  Implement the above controller onboard the hopper and demonstrate a stable running gait.
+\end{enumerate}
+\subsubsection*{Theoretical}
+\begin{enumerate}
+  \item 
+  Model the hopper system and study dynamics of impulsive systems in general.
+  \item
+  Devise a control strategy to pump in energy as well as re--orient the hopper in mid-flight. Simulate the dynamics and control strategies to find out the stability basin of our design.
+\end{enumerate}
+ 
+\nocite{glodstein_book, upenn_hex, optimal_control_book, joao, ihop, bhat_control}
+
+
+
+
+
+
+
+
+
