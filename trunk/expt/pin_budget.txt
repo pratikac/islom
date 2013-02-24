@@ -1,0 +1,10 @@
+Pin budget for dsPIC33F
+
+2 motor drivers - 		2x1 EN + 2x2 DIR
+IMU				-		3 SPI + 2x1 CS
+UART			-		1x2 Zigbee
+Prog			-		1x2	PGD+PGC (one more UART here)
+Encoders		-		2x2	QEI A+B
+
+---------------------------------------------------------
+				-		19

@@ -1,0 +1,73 @@
+\documentclass[a4paper, 11pt]{report}
+
+\renewcommand{\bibname}{References}
+\bibliographystyle{ieeetr}
+
+\usepackage{sectsty}
+\usepackage[margin=1in]{geometry}
+\usepackage[onehalfspacing]{setspace}
+\usepackage[pdftex]{graphicx}
+\usepackage{subfig}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{hyperref}
+\hypersetup
+{   colorlinks=true,        % colored links, not boxes
+   linkcolor=blue,         % internal links
+   citecolor=red,          % bib links
+   filecolor=magenta,      % file color
+   urlcolor=cyan           % external color
+%    linkcolor=black,         % internal links
+%    citecolor=black,          % bib links
+%    filecolor=black,      % file color
+%    urlcolor=black           % external color
+}
+\usepackage{url}
+\usepackage[square, comma]{natbib}
+%\usepackage[english]{babel}
+\usepackage{float}
+
+
+\setlength{\parindent}{0pt}
+
+% tikz
+\usetikzlibrary{arrows}
+\usetikzlibrary{snakes}
+\usetikzlibrary{patterns}
+
+\begin{document}
+    {
+    \pagestyle{empty}       % no page numbers
+    \include{cover}
+    %\include{certi}
+    }
+    {
+    \small
+    \newpage
+    \addtolength{\topmargin}{-1in}
+    \pagenumbering{roman} \setcounter{page}{0}
+    \tableofcontents
+    }
+    \include{abstract}
+    
+    \newpage
+    \addcontentsline{toc}{chapter}{List of figures}
+    \label{pg:figlist}
+    \listoffigures
+
+    \include{chap1}
+    \include{chap2}
+    \include{chap3}
+    \include{chap4}
+    \include{chap5}
+    \include{chap6}    
+    
+    \newpage
+    \addcontentsline{toc}{chapter}{References}
+    \bibliography{ref}
+    
+    %\include{ack}
+    %\include{decla}
+\end{document}

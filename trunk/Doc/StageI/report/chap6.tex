@@ -1,0 +1,26 @@
+\chapter{Future Work}
+\label{chap:future}
+
+\section*{Mechanical design}
+This report discussed two mechanical designs that we formulated to try to obtain an efficient energy pumping mechanism for
+the one legged hopper robot. Both the designs have their share of flaws and it is not possible to go ahead with the fabrication
+without further analysis on any one of them. A few lessons from this effort and the sizing analysis for the hopper have become
+pretty clear such as the need of a rack and pinion mechanism, effects of a large leg mass on the hopping dynamics and general torque
+considerations for the whole hopper.\\
+
+The reaction wheel stabilization part can be designed almost independently from the rest of
+the mechanism. The selection of the reaction wheel dimensions and its motor is thus finished. Future changes in the hopping design
+will only marginally change these numbers.\\
+
+Thus future work involves demonstrating running and in-place hopping capabilities using the TCM and treadmill designed by Simit \cite{simit}.
+
+\section*{Embedded system}
+The IMU is almost complete and we just need to ask a few questions whether just pitch attitude is sufficient for us. The above mentioned constraint (TCM) should ensure that we do not need to add sensors to determine roll and yaw angles. A final hopper
+board will have to be designed having two motor drivers for the EPM and reaction wheel motors. This will also contain the IMU and
+the wireless XBee interface on it.
+
+\section*{Control strategy}
+We need to formulate a control law for hopping height control. The pitch orientation control law can be developed on the same lines
+of Siraj \cite{siraj} which has already been implemented by him earlier. Integrating these two control laws to demonstrate a running
+gait will result in a hopping robot which can be used as a platform for further work in control dynamics of hoppers, path following
+\cite{bowleg} and uneven terrain.

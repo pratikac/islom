@@ -1,0 +1,90 @@
+\begin{thebibliography}{10}
+
+\bibitem{review}
+A.~Sayyad, B.~Seth, and P.~Seshu, ``Single-legged hopping robotics research ---
+  {A} review,'' {\em Robotica}, vol.~25, no.~5, pp.~587--613, 2007.
+
+\bibitem{leglab}
+.~\href{http://www.ai.mit.edu/projects/leglab}{http://www.ai.mit.edu/projects/%
+leglab}, Last checked on November~4, ``{MIT} {L}eg {L}ab.''
+
+\bibitem{raibert_book}
+M.~H. Raibert, ``Legged robots,'' {\em Communications of ACM}, vol.~29, no.~6,
+  pp.~499--514, 1986.
+
+\bibitem{raibert_monopod}
+W.~Lee and M.~Raibert, ``{Control of hoof rolling in an articulated leg},''
+  {\em Robotics and Automation, 1991. Proceedings., 1991 IEEE International
+  Conference on}, pp.~1386--1391, 1991.
+
+\bibitem{zeglin}
+G.~Zeglin, ``Uniroo: {A} {O}ne-{L}egged {D}ynamic {H}opping {R}obot,'' tech.
+  rep., Massachusetts Institute of Technology, 1991.
+
+\bibitem{papan}
+K.~Papantoniou, ``Electromechanical design for an electrically powered,
+  actively balanced one leg planar robot,'' {\em Intelligent Robots and Systems
+  '91. 'Intelligence for Mechanical Systems, Proceedings IROS '91. IEEE/RSJ
+  International Workshop on}, pp.~1553--1560 vol.3, Nov 1991.
+
+\bibitem{ARLMono1}
+P.~Gregorio, ``{Design, Control and Energy Minimization Strategies for the ARL
+  Monopod},'' Master's thesis, McGill University, 1994.
+
+\bibitem{ARLMono2}
+M.~Ahmadi and M.~Buehler, ``{Preliminary Experiments with an Actively Tuned
+  Passive Dynamic Running Robot},'' {\em Experimental Robotics V}, 1997.
+
+\bibitem{bowleg}
+J.-C. Zufferey, ``{First Jumps of the 3D Bow Leg Hopper},'' tech. rep., The
+  Robotics Institute, Carnegie Mellon University, 2001.
+
+\bibitem{Bue_PassRun}
+M.~Ahmadi and M.~Buehler, ``{A control strategy for stable passive running},''
+  {\em Proc. IEEE/RSJ Conf. on Intelligent Robots and Systems}, vol.~3,
+  pp.~152--157, 1995.
+
+\bibitem{sayyad}
+A.~Sayyad, {\em {Dynamics and Control of a Single Legged Offset Mass Hopping
+  System}}.
+\newblock PhD thesis, Indian Institude of Technology Bombay, Dept. of
+  Mechanical Engineering, 2007.
+
+\bibitem{shanmug}
+P.~Shanmuganathan, {\em {Dynamics and Stabilization of Under-Actuated Monopedal
+  Hopping}}.
+\newblock PhD thesis, Indian Institude of Technology Bombay, Dept. of
+  Mechanical Engineering, July 2002.
+
+\bibitem{5cmhopper}
+T.~Wei, G.~Nelson, R.~Quinn, H.~Verma, and S.~Garverick, ``{Design of a 5-cm
+  monopod hopping robot},'' {\em Robotics and Automation, 2000. Proceedings.
+  ICRA'00. IEEE International Conference on}, vol.~3, 2000.
+
+\bibitem{londhe}
+V.~N. Londhe, ``Energy {P}umping {M}echanism for {H}opping {R}obot,'' tech.
+  rep., Indian Institute of Technology, Bombay, 2007.
+
+\bibitem{saboo}
+V.~Saboo, ``Development of a {H}opping {R}obot,'' tech. rep., Indian Institute
+  of Technology, Bombay, 2008.
+
+\bibitem{simit}
+S.~Pradhan, ``{Prototype Development for Hopping Height Control of a One-Legged
+  Hopping Robot},'' tech. rep., Indian Institute of Technology, Bombay, 2009.
+
+\bibitem{siraj}
+S.~Issani, ``{Design and Implementation of Reaction Wheel Mechanism to Control
+  a One-legged Hoppng Robot},'' tech. rep., Indian Institute of Technology,
+  Bombay, 2009.
+
+\bibitem{kalman1975}
+W.~Higgins(Jr.), ``{A Comparison of Complementary and Kalman Filtering},'' {\em
+  Aerospace and Electronic systems, IEEE Transactions on}, vol.~11, no.~3,
+  1975.
+
+\bibitem{kalman_book}
+G.~M. and A.~A., {\em {Kalman Filtering : Theory and Practice}}.
+\newblock John Wiley and Sons Inc., 2001.
+
+\end{thebibliography}

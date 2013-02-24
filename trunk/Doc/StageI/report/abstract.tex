@@ -1,0 +1,39 @@
+\newpage
+\addcontentsline{toc}{chapter}{Abstract}
+\chapter*{Abstract}
+\label{chap:abs}
+{
+\normalsize
+Single-legged locomotion gait is a hopping motion consisting of alternate flight and stance
+phases. In such a hopping robot, if the energy lost in friction and impacts is compensated,
+then along with control of robot attitude we can have stable hopping motion.\\
+
+An offset-mass hopping robot
+is a novel idea in the realm of single-legged
+robots. These robots have an inherent tendency to leap forward due to the offset mass which eases the 
+requirement of effort from the actuators. A reaction wheel is necessary to ensure that we can have a stable
+gait for different horizontal velocities and initial conditions. This project aims to build a prototype of a
+SLOM one legged hopper and its reaction wheel mechanism to demonstrate a stable 2D hopping gait.\\
+
+The structure of this report is as follows,
+\begin{itemize}
+\item
+Chapter \ref{chap:intro} introduces the one legged hopper problem along with a discussion of previous work in this area. It focusses on the different energy pumping mechanisms and balancing techniques used.
+\item
+Chapter \ref{chap:problem} details previous work done at IIT Bombay on the SLOM hopper and motivates the
+problem statement for the current project through this discussion.
+\item
+Chapter \ref{chap:mech_design} talks about two different mechanical designs for the SLOM hopper. A qualitative
+analysis of both the designs is provided along with pointers for the choice of mechanisms of the final design from among them.
+\item
+We look at three major aspects of hopper design in Chapter \ref{chap:sizing}. It provides an analysis of the
+2 mass problem, frequency modes and reaction wheel stabilization to ultimately choose the design values for
+the masses and the motors.
+\item
+A brief introduction of the embedded platform on the hopper is provided in Chaper \ref{chap:embedded}. It
+provides results of the testing of a Kalman filter for the IMU using actual sensors. We also look at
+velocity control of a motor with quadrature encoders at the end.
+\end{itemize}
+
+\textit{\textbf{Keywords:\\} SLOM, offset-mass, energy-pumping, hopping robot, height control, reaction wheel,
+attitude control, Kalman filter, inertial measurement unit}

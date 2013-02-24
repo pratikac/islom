@@ -1,0 +1,53 @@
+[General]
+def_graphic_ext=pdf
+img_extIsRegExp=false
+img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
+kileprversion=2
+kileversion=2.1 beta2
+lastDocument=design.tex
+masterDocument=
+name=pres
+pkg_extIsRegExp=false
+pkg_extensions=.cls .sty .bbx .cbx .lbx
+src_extIsRegExp=false
+src_extensions=.tex .ltx .latex .dtx .ins
+
+[Tools]
+MakeIndex=
+QuickBuild=
+
+[item:design.tex]
+archive=true
+column=10
+encoding=UTF-8
+highlight=LaTeX
+line=22
+open=true
+order=2
+
+[item:intro.tex]
+archive=true
+column=0
+encoding=UTF-8
+highlight=LaTeX
+line=0
+open=true
+order=1
+
+[item:pres.kilepr]
+archive=true
+column=0
+encoding=
+highlight=
+line=0
+open=false
+order=-1
+
+[item:pres.tex]
+archive=true
+column=28
+encoding=UTF-8
+highlight=LaTeX
+line=40
+open=true
+order=0

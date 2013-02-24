@@ -1,0 +1,32 @@
+\chapter{Conclusion}
+\label{chap:conclude}
+
+The project aimed to tackle four tasks viz.
+\begin{enumerate}
+  \item
+  The essence of this phase was 
+  to use a number of simple back-of-the-envelope style analyses to get an idea of the relative importance 
+  of the enormous number of parameters associated with this system. Such analyses were instrumental in 
+  getting an intuitive grasp of the complex dynamics without getting into mathematical complexities. It also helped a lot while performing design iterations to decide final dimensions.
+  \item
+  \begin{itemize}
+   \item 
+    This concentrated on the control aspect of the robot. I have modeled the 
+    whole non-linear system for the hopping robot and simulated stable in-place hopping as well as a stable 
+    hopping gait.
+    \item
+    I faced some limitations due to the nature of the computing environment (Mathematica) and hence I believe a lot of nicer things are possible like running a GA to get the good launch parameters automatically, finding an explicit Poincare Map and doing eigenvalue analysis and finally hopping over uneven terrain. There is a lot of scope for further work in terms of bifurcation analysis, path following, hopping with minimal expenditure of energy etc.
+  \end{itemize}
+
+  \item
+  \begin{description}
+   \item[\textsf{Mechanical}] 
+    Another major task was to fabricate the robot. The robot is being fabricated and should be ready by this week . There was a lot of delay in getting the robot fabricated partly due to the hunt for a better design and partly due to the complexity of the mechanisms involved.
+    \item[\textsf{Electronics}]
+    The electronics has been designed and is ready. Essential tasks such as event detection, motor control and sensor filtering were duly concentrated upon to ensure enough computing power for the control law. Wireless debugging was extensively used to analyse codes.
+  \end{description}
+  \item
+  Experimentation with the actual system was a crucial aspect of the project which couldn't be completed. 
+  It will need another few weeks to get the robot up and running. I aim to convert the controller in 
+  embedded form and demonstrate a running gait as further work.
+\end{enumerate}

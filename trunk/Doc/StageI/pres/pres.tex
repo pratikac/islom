@@ -1,0 +1,61 @@
+\documentclass[xcolor=dvipsnames, 9pt]{beamer}
+\usepackage{mathrsfs}
+\usepackage{bm}
+\usepackage{helvet}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage{times}
+\usepackage[absolute]{textpos}
+\setlength{\TPHorizModule}{\paperwidth}
+\setlength{\TPVertModule}{\paperheight}
+
+\setlength{\overfullrule}{2pt}
+\usepackage{tikz}
+\usetikzlibrary{snakes}
+\usetikzlibrary{patterns}
+\usetikzlibrary{arrows}
+
+\usetheme{Frankfurt}
+\useinnertheme{rounded}
+\setbeamercovered{transparent}
+
+\beamertemplatesolidbackgroundcolor{black!5}
+\beamertemplatetransparentcovered
+
+\newcommand{\greencol}{\color[RGB]{35,170,30}}
+\setbeamerfont{bibfont}{size=\tiny}
+
+\title{Design and Stabilization of a\\[0.05in]One Legged Hopper}
+%\subtitle{Something catchy here}
+
+\author[Pratik]{Pratik Chaudhari\\[0.1in]06D01015\\[0.3in]\small{Prof. Hemendra Arya\hfill Prof. Bhartendu Seth}\\[0.05in]\footnotesize{Guide\hspace{1.4in} Co-guide}}
+\date{\footnotesize{B.Tech. Project}}
+
+\AtBeginSection[]
+{
+    \begin{frame}<beamer>
+		\frametitle{Outline}
+        \small
+        {
+		    \tableofcontents[currentsection]
+        }
+	\end{frame}
+}
+
+\begin{document}
+{
+\usebackgroundtemplate{\begin{textblock}{0.6}(0.3,0.55)\includegraphics[scale=0.2]{fig/cartoon.pdf}\end{textblock}}
+\begin{frame}
+	\titlepage
+\end{frame}
+}
+
+\include{intro}
+\include{design}
+\include{analysis}
+\include{embedded}
+
+\end{document}
+
+
